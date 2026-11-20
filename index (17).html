@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Anand Mixture Point | Danavaipeta</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+  body { background: #f4f6f8; color: #1e293b; padding-bottom: 85px; }
+  .offer-bar { background: #028090; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 10px; text-align: center; }
+  header { background: #0f6b38; color: #fff; padding: 12px 14px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .logo { width: 42px; height: 42px; border-radius: 50%; background: #ffd166; color: #094925; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .brand h1 { font-size: 16px; line-height: 1.2; }
+  .brand p { font-size: 11px; color: #fde68a; }
+  .cart-btn { background: #17a2b8; color: #fff; border: 0; width: 42px; height: 42px; border-radius: 50%; font-size: 18px; position: relative; cursor: pointer; flex-shrink: 0; }
+  .cart-count { position: absolute; top: -4px; right: -4px; background: #ef4444; color: #fff; font-size: 11px; font-weight: 700; min-width: 19px; height: 19px; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 0 4px; }
+  .search-wrap { padding: 10px 12px 4px; max-width: 900px; margin: auto; }
+  .search-wrap input { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-size: 14px; background: #fff; }
+  .cats { display: flex; gap: 8px; overflow-x: auto; padding: 8px 12px; max-width: 900px; margin: auto; }
+  .cats::-webkit-scrollbar { display: none; }
+  .cat { background: #fff; border: 1.5px solid #e2e8f0; padding: 7px 13px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; cursor: pointer; }
+  .cat.on { background: #0f6b38; color: #fff; border-color: #0f6b38; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 8px 12px; max-width: 900px; margin: auto; }
+  @media (min-width: 680px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .card { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+  .vis { height: 85px; display: flex; align-items: center; justify-content: center; font-size: 36px; position: relative; }
+  .hot { position: absolute; top: 6px; left: 6px; background: #dc2626; color: #fff; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 8px; }
+  .cb { padding: 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .en { font-size: 14px; font-weight: 800; color: #0f172a; }
+  .te { font-size: 11px; color: #64748b; }
+  .pr { font-size: 15px; font-weight: 800; color: #b45309; }
+  .vars { display: flex; justify-content: center; gap: 4px; flex-wrap: wrap; }
+  .vb { border: 1px solid #cbd5e1; background: #f8fafc; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
+  .vb.on { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+  .qbox { display: flex; align-items: center; border: 1.5px solid #0f6b38; border-radius: 8px; overflow: hidden; height: 34px; margin-top: auto; }
+  .qbox button { background: #ecfdf5; border: 0; width: 38px; height: 100%; font-size: 18px; font-weight: 800; color: #0f6b38; cursor: pointer; }
+  .qbox span { flex: 1; font-size: 14px; font-weight: 800; }
+  .bbar { position: fixed; bottom: 0; left: 0; right: 0; background: #094925; color: #fff; padding: 12px 14px; display: none; justify-content: space-between; align-items: center; z-index: 40; }
+  .bbar strong { color: #fde047; font-size: 16px; }
+  .vbtn { background: #f59e0b; color: #000; border: 0; padding: 9px 14px; border-radius: 8px; font-weight: 800; font-size: 13px; cursor: pointer; }
+  .ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 99; align-items: flex-end; justify-content: center; }
+  .ov.open { display: flex; }
+  .sh { background: #fff; width: 100%; max-width: 520px; max-height: 92vh; border-radius: 18px 18px 0 0; padding: 16px; overflow-y: auto; }
+  .mh { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px; }
+  .ci { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px dashed #e2e8f0; font-size: 13px; }
+  .al { padding: 9px; border-radius: 8px; font-size: 12px; font-weight: 700; margin: 8px 0; text-align: center; }
+  .w { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+  .ok { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .fg { margin-bottom: 8px; }
+  .fg label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+  .fg input, .fg textarea { width: 100%; padding: 8px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; }
+  .gbtn, .ubtn, .wabtn { width: 100%; border: 0; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; margin-top: 6px; color: #fff; }
+  .gbtn { background: #2563eb; }
+  .ubtn { background: #7c3aed; }
+  .wabtn { background: #16a34a; }
+  .wabtn:disabled, .ubtn:disabled { background: #94a3b8; cursor: not-allowed; }
+  .chk-box { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1.5px solid #cbd5e1; padding: 10px; border-radius: 8px; margin-top: 8px; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .chk-box input { width: 18px; height: 18px; accent-color: #16a34a; }
+</style>
+</head>
+<body>
+
+<div class="offer-bar">Min Order ₹100 | Above ₹300 FREE Delivery (within 3 km) | ₹15/km Slab Delivery</div>
+
+<header>
+  <div class="brand">
+    <div class="logo">SMP</div>
+    <div>
+      <h1>Sri Anand Mixture Point</h1>
+      <p>Opp. Phanindra Scan, Danavaipeta</p>
+    </div>
+  </div>
+  <button class="cart-btn" onclick="openCart()">🛒<span class="cart-count" id="cartCount">0</span></button>
+</header>
+
+<div class="search-wrap">
+  <input id="searchInput" placeholder="Search items (e.g., Mirchi Bajji, Mixture, Batani, Slice)..." oninput="renderItems()">
+</div>
+
+<div class="cats">
+  <button class="cat on" onclick="setCategory('All', this)">All (45)</button>
+  <button class="cat" onclick="setCategory('Bajji & Samosa', this)">Bajji &amp; Samosa</button>
+  <button class="cat" onclick="setCategory('Mixture', this)">Mixture</button>
+  <button class="cat" onclick="setCategory('Batani', this)">Batani</button>
+  <button class="cat" onclick="setCategory('Slice', this)">Slice</button>
+</div>
+
+<main class="grid" id="productGrid"></main>
+
+<div class="bbar" id="bottomBar">
+  <div><span id="barItems">0 Items</span> • <strong id="barTotal">₹0</strong></div>
+  <button class="vbtn" onclick="openCart()">Checkout →</button>
+</div>
+
+<div class="ov" id="cartModal" onclick="if(event.target===this)closeCart()">
+  <div class="sh">
+    <div class="mh">
+      <h3>Your Cart &amp; Checkout</h3>
+      <button onclick="closeCart()" style="border:0;background:#f1f5f9;width:30px;height:30px;border-radius:50%;font-weight:700;cursor:pointer">✕</button>
+    </div>
+    <div id="cartList"></div>
+    <div id="deliveryAlert" class="al w"></div>
+
+    <button class="gbtn" onclick="detectGPS()">📡 Detect My Exact GPS Location (Required)</button>
+    <div id="gpsStatus" style="font-size:12px;font-weight:700;color:#0f6b38;margin:6px 0;text-align:center"></div>
+
+    <div class="fg"><label>Customer Name *</label><input id="custName" placeholder="Enter your name"></div>
+    <div class="fg"><label>Mobile Number *</label><input id="custPhone" type="tel" placeholder="10-digit mobile number"></div>
+    <div class="fg"><label>Full Delivery Address *</label><textarea id="custAddr" rows="2" placeholder="House no, Street, Landmark"></textarea></div>
+
+    <button class="ubtn" id="upiBtn" onclick="payWithUPI()" disabled>💳 Pay via UPI (paytm.s1lo8gf@pty)</button>
+
+    <label class="chk-box" id="paidLabel" style="opacity:0.5;pointer-events:none;">
+      <input type="checkbox" id="paidCheck" onchange="toggleConfirmBtn()">
+      <span>I have completed the UPI payment</span>
+    </label>
+
+    <button class="wabtn" id="waBtn" onclick="sendWhatsApp()" disabled>📲 Confirm Order on WhatsApp</button>
+  </div>
+</div>
+
+<script>
+const SHOP_LAT = 17.0044;
+const SHOP_LON = 81.7875;
+const WA_NUMBER = "919393446363";
+const UPI_ID = "paytm.s1lo8gf@pty";
+
+const MENU_ITEMS = [
+  { id: 1, en: "Mirchi Bajji", te: "మిర్చి బజ్జీ", cat: "Bajji & Samosa", icon: "🌶️", bg: "#fef3c7", hot: true, vars: [{ l: "1 Plate (3 pcs)", p: 30 }] },
+  { id: 2, en: "Aloo Bajji", te: "ఆలూ బజ్జీ", cat: "Bajji & Samosa", icon: "🥔", bg: "#ffedd5", hot: false, vars: [{ l: "1 Plate (3 pcs)", p: 30 }] },
+  { id: 3, en: "Samosa", te: "సమోసా", cat: "Bajji & Samosa", icon: "🥟", bg: "#fef9c3", hot: true, vars: [{ l: "1 Plate (3 pcs)", p: 30 }] },
+  { id: 4, en: "Nethi Vankaya Bajji", te: "నేతి వంకాయ బజ్జీ", cat: "Bajji & Samosa", icon: "🍆", bg: "#f3e8ff", hot: false, vars: [{ l: "1 Plate (3 pcs)", p: 40 }] },
+  { id: 5, en: "Perugu Vankaya Bajji", te: "పెరుగు వంకాయ బజ్జీ", cat: "Bajji & Samosa", icon: "🍆", bg: "#ede9fe", hot: false, vars: [{ l: "1 Plate (3 pcs)", p: 40 }] },
+  { id: 6, en: "Nethi Mirchi Bajji", te: "నేతి మిర్చి బజ్జీ", cat: "Bajji & Samosa", icon: "🌶️", bg: "#fee2e2", hot: false, vars: [{ l: "1 Plate (3 pcs)", p: 40 }] },
+  { id: 7, en: "Nethi Aloo Bajji", te: "నేతి ఆలూ బజ్జీ", cat: "Bajji & Samosa", icon: "🥔", bg: "#ffedd5", hot: false, vars: [{ l: "1 Plate (3 pcs)", p: 40 }] },
+  { id: 8, en: "Nethi Samosa", te: "నేతి సమోసా", cat: "Bajji & Samosa", icon: "🥟", bg: "#fef3c7", hot: false, vars: [{ l: "1 Plate (2 pcs)", p: 30 }] },
+  { id: 9, en: "Atukula Mixture", te: "అటుకుల మిక్చర్", cat: "Mixture", icon: "🥣", bg: "#dcfce7", hot: true, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 10, en: "Nethi Atukula Mixture", te: "నేతి అటుకుల మిక్చర్", cat: "Mixture", icon: "🥣", bg: "#d1fae5", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 11, en: "Mirchi Bajji Mixture", te: "మిర్చి బజ్జీ మిక్చర్", cat: "Mixture", icon: "🌶️", bg: "#fee2e2", hot: true, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 12, en: "Aloo Bajji Mixture", te: "ఆలూ బజ్జీ మిక్చర్", cat: "Mixture", icon: "🥣", bg: "#ffedd5", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 13, en: "Cut Bajji Mixture", te: "కట్ బజ్జీ మిక్చర్", cat: "Mixture", icon: "🥣", bg: "#fef3c7", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 14, en: "Tomato Bajji Mixture", te: "టమోటా బజ్జీ మిక్చర్", cat: "Mixture", icon: "🍅", bg: "#ffe4e6", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 15, en: "Samosa Mixture", te: "సమోసా మిక్చర్", cat: "Mixture", icon: "🥟", bg: "#fef9c3", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 16, en: "Nethi Vankaya Bajji Mixture", te: "నేతి వంకాయ బజ్జీ మిక్చర్", cat: "Mixture", icon: "🍆", bg: "#f3e8ff", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 17, en: "Perugu Bajji Mixture", te: "పెరుగు బజ్జీ మిక్చర్", cat: "Mixture", icon: "🥣", bg: "#e0f2fe", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 18, en: "Aloo Mixture", te: "ఆలూ మిక్చర్", cat: "Mixture", icon: "🥔", bg: "#ffedd5", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 19, en: "Egg Mixture", te: "ఎగ్ మిక్చర్", cat: "Mixture", icon: "🥚", bg: "#fef3c7", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 20, en: "Meal Maker Mixture", te: "మిల్మేకర్ మిక్చర్", cat: "Mixture", icon: "🥣", bg: "#dcfce7", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 21, en: "Palli Peanut Mixture", te: "పల్లీ మిక్చర్", cat: "Mixture", icon: "🥜", bg: "#fde68a", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 22, en: "Pachi Tomato Mixture", te: "పచ్చి టమాట మిక్చర్", cat: "Mixture", icon: "🍅", bg: "#ffe4e6", hot: false, vars: [{ l: "1 Plate", p: 40 }] },
+  { id: 23, en: "Kaju Cashew Mixture", te: "జీడిపప్పు మిక్చర్", cat: "Mixture", icon: "🌰", bg: "#fef08a", hot: true, vars: [{ l: "1 Plate", p: 70 }] },
+  { id: 24, en: "Masala Batani", te: "మసాలా బటానీ", cat: "Batani", icon: "🍲", bg: "#dcfce7", hot: true, vars: [{ l: "Half", p: 30 }, { l: "Full", p: 40 }] },
+  { id: 25, en: "Samosa Batani", te: "సమోసా బటానీ", cat: "Batani", icon: "🍲", bg: "#fef9c3", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 26, en: "Mirchi Bajji Batani", te: "మిర్చి బజ్జీ బటానీ", cat: "Batani", icon: "🌶️", bg: "#fee2e2", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 27, en: "Aloo Bajji Batani", te: "ఆలూ బజ్జీ బటానీ", cat: "Batani", icon: "🍲", bg: "#ffedd5", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 28, en: "Tomato Bajji Batani", te: "టమోటా బజ్జీ బటానీ", cat: "Batani", icon: "🍅", bg: "#ffe4e6", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 29, en: "Cut Bajji Batani", te: "కట్ బజ్జీ బటానీ", cat: "Batani", icon: "🍲", bg: "#fef3c7", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 30, en: "Vankaya Bajji Batani", te: "వంకాయ బజ్జీ బటానీ", cat: "Batani", icon: "🍆", bg: "#f3e8ff", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 31, en: "Perugu Bajji Batani", te: "పెరుగు బజ్జీ బటానీ", cat: "Batani", icon: "🍲", bg: "#e0f2fe", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 32, en: "Aloo Batani", te: "ఆలూ బటానీ", cat: "Batani", icon: "🥔", bg: "#ffedd5", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 33, en: "Egg Batani", te: "ఎగ్ బటానీ", cat: "Batani", icon: "🥚", bg: "#fef3c7", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 34, en: "Meal Maker Batani", te: "మిల్మేకర్ బటానీ", cat: "Batani", icon: "🍲", bg: "#dcfce7", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 35, en: "Palli Batani", te: "పల్లీ బటానీ", cat: "Batani", icon: "🥜", bg: "#fde68a", hot: false, vars: [{ l: "1 Plate", p: 50 }] },
+  { id: 36, en: "Kaju Cashew Batani", te: "జీడిపప్పు బటానీ", cat: "Batani", icon: "🌰", bg: "#fef08a", hot: true, vars: [{ l: "1 Plate", p: 80 }] },
+  { id: 37, en: "Tomato Slice", te: "టమోటా స్లైస్", cat: "Slice", icon: "🍅", bg: "#ffe4e6", hot: false, vars: [{ l: "1 Plate", p: 45 }] },
+  { id: 38, en: "Aloo Slice", te: "ఆలూ స్లైస్", cat: "Slice", icon: "🥔", bg: "#ffedd5", hot: false, vars: [{ l: "1 Plate", p: 45 }] },
+  { id: 39, en: "Egg Slice", te: "ఎగ్ స్లైస్", cat: "Slice", icon: "🥚", bg: "#fef3c7", hot: false, vars: [{ l: "1 Plate", p: 45 }] },
+  { id: 40, en: "Onion Slice", te: "ఆనియన్ స్లైస్", cat: "Slice", icon: "🧅", bg: "#f3e8ff", hot: false, vars: [{ l: "1 Plate", p: 45 }] },
+  { id: 41, en: "Cut Bajji Slice", te: "కట్ బజ్జీ స్లైస్", cat: "Slice", icon: "🥪", bg: "#fef9c3", hot: false, vars: [{ l: "1 Plate", p: 45 }] },
+  { id: 42, en: "Onion Tomato Slice", te: "ఆనియన్ టమాటా స్లైస్", cat: "Slice", icon: "🥪", bg: "#ffe4e6", hot: false, vars: [{ l: "1 Plate", p: 60 }] },
+  { id: 43, en: "Tomato Egg Slice", te: "టమోటా ఎగ్ స్లైస్", cat: "Slice", icon: "🍳", bg: "#fef3c7", hot: true, vars: [{ l: "1 Plate", p: 60 }] },
+  { id: 44, en: "Tomato Aloo Slice", te: "టమోటా ఆలూ స్లైస్", cat: "Slice", icon: "🥪", bg: "#ffedd5", hot: false, vars: [{ l: "1 Plate", p: 60 }] },
+  { id: 45, en: "Onion Egg Slice", te: "ఆనియన్ ఎగ్ స్లైస్", cat: "Slice", icon: "🍳", bg: "#ede9fe", hot: false, vars: [{ l: "1 Plate", p: 60 }] }
+];
+
+let activeCategory = "All";
+let selectedVar = {};
+let cart = {};
+let distanceKm = null;
+let userLat = null;
+let userLon = null;
+
+function setCategory(cat, btn) {
+  activeCategory = cat;
+  document.querySelectorAll(".cat").forEach(el => el.classList.remove("on"));
+  btn.classList.add("on");
+  renderItems();
+}
+
+function selectVariant(id, idx) {
+  selectedVar[id] = idx;
+  renderItems();
+}
+
+function getItemQty(id, vIdx) {
+  const key = id + "-" + vIdx;
+  return cart[key] ? cart[key].qty : 0;
+}
+
+function updateQty(id, delta) {
+  const item = MENU_ITEMS.find(x => x.id === id);
+  const vIdx = selectedVar[id] || 0;
+  const variant = item.vars[vIdx];
+  const key = id + "-" + vIdx;
+  const current = cart[key] ? cart[key].qty : 0;
+  const next = Math.max(0, current + delta);
+
+  if (next === 0) {
+    delete cart[key];
+  } else {
+    cart[key] = { en: item.en, te: item.te, label: variant.l, price: variant.p, qty: next };
+  }
+  renderItems();
+  refreshCartSummary();
+}
+
+function renderItems() {
+  const query = document.getElementById("searchInput").value.trim().toLowerCase();
+  const grid = document.getElementById("productGrid");
+
+  const filtered = MENU_ITEMS.filter(item => {
+    const matchCat = activeCategory === "All" || item.cat === activeCategory;
+    const matchQuery = !query || item.en.toLowerCase().includes(query) || item.te.includes(query);
+    return matchCat && matchQuery;
+  });
+
+  grid.innerHTML = filtered.map(item => {
+    const vIdx = selectedVar[item.id] || 0;
+    const variant = item.vars[vIdx];
+    const qty = getItemQty(item.id, vIdx);
+    const varBtns = item.vars.map((v, i) =>
+      `<button class="vb ${i === vIdx ? "on" : ""}" onclick="selectVariant(${item.id}, ${i})">${v.l}</button>`
+    ).join("");
+
+    return `
+      <div class="card">
+        <div class="vis" style="background:${item.bg}">
+          ${item.hot ? '<span class="hot">SPECIAL</span>' : ""}
+          <span>${item.icon}</span>
+        </div>
+        <div class="cb">
+          <div class="en">${item.en}</div>
+          <div class="te">${item.te}</div>
+          <div class="pr">₹${variant.p}</div>
+          <div class="vars">${varBtns}</div>
+          <div class="qbox">
+            <button onclick="updateQty(${item.id}, -1)">−</button>
+            <span>${qty}</span>
+            <button onclick="updateQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function calculateTotals() {
+  const list = Object.values(cart);
+  const subTotal = list.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const totalCount = list.reduce((sum, item) => sum + item.qty, 0);
+  let deliveryFee = 0;
+
+  if (distanceKm !== null) {
+    if (subTotal >= 300 && distanceKm <= 3) {
+      deliveryFee = 0;
+    } else if (distanceKm <= 1) {
+      deliveryFee = 15;
+    } else if (distanceKm <= 2) {
+      deliveryFee = 30;
+    } else {
+      deliveryFee = Math.ceil(distanceKm) * 15;
+    }
+  }
+  return { list, subTotal, totalCount, deliveryFee, grandTotal: subTotal + deliveryFee };
+}
+
+function refreshCartSummary() {
+  const { totalCount, subTotal } = calculateTotals();
+  document.getElementById("cartCount").innerText = totalCount;
+  const bar = document.getElementById("bottomBar");
+  bar.style.display = totalCount > 0 ? "flex" : "none";
+  document.getElementById("barItems").innerText = totalCount + (totalCount === 1 ? " Item" : " Items");
+  document.getElementById("barTotal").innerText = "₹" + subTotal;
+  renderCartModal();
+}
+
+function detectGPS() {
+  const status = document.getElementById("gpsStatus");
+  if (!navigator.geolocation) {
+    status.innerText = "GPS not supported on this browser.";
+    return;
+  }
+  status.innerText = "Detecting exact GPS location...";
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLat = pos.coords.latitude;
+    userLon = pos.coords.longitude;
+    const R = 6371;
+    const dLat = (userLat - SHOP_LAT) * Math.PI / 180;
+    const dLon = (userLon - SHOP_LON) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(SHOP_LAT * Math.PI / 180) * Math.cos(userLat * Math.PI / 180) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const exactKm = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    distanceKm = Math.round(exactKm * 100) / 100;
+    const meters = Math.round(distanceKm * 1000);
+    status.innerText = distanceKm < 1
+      ? `📍 Distance: ${meters} meters (${distanceKm} km) from Danavaipeta`
+      : `📍 Distance: ${distanceKm} km from Danavaipeta`;
+    renderCartModal();
+  }, () => {
+    status.innerText = "⚠️ Please turn ON Location/GPS and allow permission.";
+  }, { enableHighAccuracy: true, timeout: 10000 });
+}
+
+function renderCartModal() {
+  const { list, subTotal, deliveryFee, grandTotal } = calculateTotals();
+  const cartList = document.getElementById("cartList");
+  const alertBox = document.getElementById("deliveryAlert");
+  const upiBtn = document.getElementById("upiBtn");
+  const paidLabel = document.getElementById("paidLabel");
+
+  if (list.length === 0) {
+    cartList.innerHTML = '<p style="text-align:center;color:#64748b;padding:12px;">Your cart is empty.</p>';
+    alertBox.className = "al w";
+    alertBox.innerText = "Minimum order value is ₹100";
+    upiBtn.disabled = true;
+    paidLabel.style.opacity = "0.5";
+    paidLabel.style.pointerEvents = "none";
+    toggleConfirmBtn();
+    return;
+  }
+
+  cartList.innerHTML = list.map(i => `
+    <div class="ci">
+      <div><b>${i.en}</b> (${i.label}) × ${i.qty}</div>
+      <div><b>₹${i.price * i.qty}</b></div>
+    </div>
+  `).join("") + `
+    <div class="ci"><span>Items Total</span><b>₹${subTotal}</b></div>
+    <div class="ci"><span>Delivery Charge</span><b>${distanceKm === null ? "Detect GPS first" : (deliveryFee === 0 ? "FREE (₹0)" : "₹" + deliveryFee)}</b></div>
+    <div class="ci" style="font-size:16px"><b>Grand Total</b><b style="color:#0f6b38">₹${grandTotal}</b></div>
+  `;
+
+  if (subTotal < 100) {
+    alertBox.className = "al w";
+    alertBox.innerText = `Add ₹${100 - subTotal} more (Minimum order ₹100)`;
+    upiBtn.disabled = true;
+    paidLabel.style.opacity = "0.5";
+    paidLabel.style.pointerEvents = "none";
+  } else if (distanceKm === null) {
+    alertBox.className = "al w";
+    alertBox.innerText = 'Tap "Detect My Exact GPS Location" below to continue';
+    upiBtn.disabled = true;
+    paidLabel.style.opacity = "0.5";
+    paidLabel.style.pointerEvents = "none";
+  } else {
+    alertBox.className = "al ok";
+    alertBox.innerText = deliveryFee === 0
+      ? `🎉 FREE Delivery applied (${distanceKm} km)`
+      : `Delivery Charge: ₹${deliveryFee} (${distanceKm} km from shop)`;
+    upiBtn.disabled = false;
+    upiBtn.innerText = `💳 Pay ₹${grandTotal} via UPI (${UPI_ID})`;
+    paidLabel.style.opacity = "1";
+    paidLabel.style.pointerEvents = "auto";
+  }
+  toggleConfirmBtn();
+}
+
+function toggleConfirmBtn() {
+  const checked = document.getElementById("paidCheck").checked;
+  const upiEnabled = !document.getElementById("upiBtn").disabled;
+  document.getElementById("waBtn").disabled = !(checked && upiEnabled);
+}
+
+function openCart() {
+  renderCartModal();
+  document.getElementById("cartModal").classList.add("open");
+}
+
+function closeCart() {
+  document.getElementById("cartModal").classList.remove("open");
+}
+
+function payWithUPI() {
+  const { grandTotal } = calculateTotals();
+  window.location.href = `upi://pay?pa=${UPI_ID}&pn=Sri%20Anand%20Mixture%20Point&am=${grandTotal}&cu=INR`;
+}
+
+function sendWhatsApp() {
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const addr = document.getElementById("custAddr").value.trim();
+  if (!name || !phone || !addr) {
+    alert("Please enter Customer Name, Mobile Number & Address.");
+    return;
+  }
+  const { list, subTotal, deliveryFee, grandTotal } = calculateTotals();
+  const itemLines = list.map((x, idx) => `${idx + 1}. ${x.en} (${x.label}) x ${x.qty} = ₹${x.price * x.qty}`).join("\n");
+  const msg =
+`*Sri Anand Mixture Point - New Order*
+
+*Name:* ${name}
+*Phone:* ${phone}
+*Address:* ${addr}
+*One-Way Distance:* ${distanceKm} km
+*Google Maps Pin:* https://maps.google.com/?q=${userLat},${userLon}
+
+*Order Items:*
+${itemLines}
+
+*Items Total:* ₹${subTotal}
+*Delivery Fee:* ₹${deliveryFee}
+*Grand Total:* ₹${grandTotal}
+*Payment:* Paid via UPI (${UPI_ID})`;
+
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+renderItems();
+</script>
+</body>
+</html>
