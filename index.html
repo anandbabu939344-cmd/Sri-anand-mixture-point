@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173b2b">
+  <title>Sri Anand Mixture Point | Fresh Snacks & Mixtures</title>
+  <meta name="description" content="Discover fresh, crunchy mixtures and delicious snacks at Sri Anand Mixture Point.">
+  <style>
+    :root {
+      --green: #173b2b;
+      --green-2: #24563d;
+      --cream: #fffaf0;
+      --gold: #e9b949;
+      --ink: #20251f;
+      --muted: #68736a;
+      --white: #fff;
+      --shadow: 0 14px 38px rgba(24, 48, 34, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: var(--cream); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    .topbar { background: var(--green); color: #f9f5e9; text-align: center; padding: 8px 16px; font-size: .88rem; }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,250,240,.96); backdrop-filter: blur(12px); border-bottom: 1px solid #eee5d5; }
+    .nav { max-width: 1160px; margin: auto; padding: 13px 22px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; color: var(--green); line-height: 1.15; }
+    .brand-mark { width: 43px; height: 43px; display: grid; place-items: center; background: var(--gold); border-radius: 14px; font-size: 1.45rem; }
+    .brand small { display: block; font-size: .7rem; letter-spacing: 1.8px; color: var(--muted); font-weight: 700; margin-top: 4px; }
+    .nav-links { display: flex; align-items: center; gap: 25px; font-size: .94rem; font-weight: 700; }
+    .nav-links a:hover { color: #a66d0d; }
+    .menu-toggle { display: none; border: 0; background: transparent; color: var(--green); font-size: 1.7rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 999px; padding: 12px 21px; font-weight: 800; transition: transform .2s, background .2s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--gold); color: #2b2416; }
+    .btn-dark { background: var(--green); color: white; }
+    .btn-outline { border: 1px solid #d8cdb9; color: var(--green); background: transparent; }
+    .hero { overflow: hidden; background: radial-gradient(circle at 80% 20%, #386c4c 0, transparent 28%), linear-gradient(115deg, #102b20, #1d4932 68%, #2c5c3d); color: white; }
+    .hero-inner { max-width: 1160px; min-height: 545px; padding: 72px 22px; margin: auto; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 30px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 3px; font-size: .76rem; color: var(--gold); font-weight: 800; }
+    h1 { font-size: clamp(2.5rem, 5.2vw, 4.7rem); line-height: 1.05; margin: 15px 0 20px; letter-spacing: -2px; }
+    .hero p { max-width: 530px; color: #e5eee5; font-size: 1.08rem; margin-bottom: 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-art { min-height: 360px; display: grid; place-items: center; position: relative; }
+    .food-orbit { width: min(360px, 78vw); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; display: grid; place-items: center; position: relative; background: rgba(255,255,255,.06); }
+    .food-plate { width: 76%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle, #f5d58c 0 43%, #dba94e 44% 48%, #fff4d8 49% 62%, #d8d0b9 63% 68%, #f8f1df 69%); box-shadow: 0 25px 55px rgba(0,0,0,.25); font-size: clamp(5rem, 12vw, 8rem); }
+    .float-tag { position: absolute; background: white; color: var(--green); border-radius: 15px; padding: 10px 15px; font-weight: 800; box-shadow: var(--shadow); }
+    .tag-one { top: 12%; right: -2%; } .tag-two { bottom: 12%; left: -4%; }
+    section { padding: 76px 22px; }
+    .container { max-width: 1160px; margin: auto; }
+    .section-head { text-align: center; max-width: 650px; margin: 0 auto 35px; }
+    .section-head .eyebrow { color: #a66d0d; }
+    h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); line-height: 1.15; color: var(--green); margin: 10px 0 12px; letter-spacing: -.8px; }
+    .section-head p { color: var(--muted); margin: 0; }
+    .features { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: -34px; position: relative; z-index: 2; }
+    .feature { background: white; padding: 23px; border-radius: 18px; box-shadow: var(--shadow); text-align: center; }
+    .feature-icon { font-size: 2rem; }
+    .feature h3 { color: var(--green); margin: 8px 0 4px; }
+    .feature p { color: var(--muted); margin: 0; font-size: .92rem; }
+    #menu { background: #f4eedf; }
+    .filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin: 0 0 28px; }
+    .filter { border: 1px solid #d8cdb9; background: transparent; color: var(--green); border-radius: 999px; padding: 9px 17px; font-weight: 700; }
+    .filter.active, .filter:hover { background: var(--green); color: white; border-color: var(--green); }
+    .products { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .product { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 24px rgba(35,45,30,.07); transition: transform .2s; }
+    .product:hover { transform: translateY(-5px); }
+    .product-image { min-height: 165px; display: grid; place-items: center; font-size: 5rem; background: linear-gradient(135deg,#f7e7bf,#f0d28d); }
+    .product-body { padding: 19px; }
+    .product-body h3 { margin: 0 0 5px; color: var(--green); }
+    .product-body p { margin: 0 0 15px; color: var(--muted); font-size: .92rem; min-height: 45px; }
+    .product-bottom { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .price { font-weight: 800; color: #9b650b; }
+    .small-btn { border: 0; background: var(--green); color: white; padding: 9px 14px; border-radius: 999px; font-weight: 700; }
+    .about-grid { display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 45px; }
+    .about-art { min-height: 340px; border-radius: 24px; display: grid; place-items: center; background: linear-gradient(145deg,#e7bd68,#f8e9c8); font-size: 8rem; }
+    .about-copy p { color: var(--muted); }
+    .ticks { padding: 0; list-style: none; display: grid; gap: 10px; margin: 22px 0; }
+    .ticks li::before { content: "✓"; color: #b27a16; font-weight: 900; margin-right: 10px; }
+    .cta { background: var(--green); color: white; text-align: center; }
+    .cta h2 { color: white; }
+    .cta p { color: #dce9df; margin: 0 auto 24px; max-width: 600px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    .contact-card { background: white; padding: 26px; border-radius: 18px; box-shadow: var(--shadow); }
+    .contact-card h3 { color: var(--green); margin-top: 0; }
+    .contact-line { display: flex; gap: 12px; margin: 14px 0; color: var(--muted); }
+    .contact-line strong { color: var(--ink); }
+    .contact-form { display: grid; gap: 12px; }
+    input, textarea { width: 100%; padding: 13px 14px; border: 1px solid #ded7ca; border-radius: 10px; font: inherit; background: #fffdf8; }
+    textarea { min-height: 105px; resize: vertical; }
+    footer { background: #10251b; color: #d9e4da; padding: 25px 22px; text-align: center; font-size: .9rem; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: #142d20; color: white; padding: 12px 18px; border-radius: 12px; z-index: 50; transition: .25s; box-shadow: var(--shadow); }
+    .toast.show { opacity: 1; transform: translate(-50%,0); }
+
+    .cart-panel { position: fixed; right: 18px; bottom: 18px; z-index: 30; background: white; width: min(360px, calc(100vw - 36px)); border-radius: 18px; box-shadow: 0 18px 55px rgba(0,0,0,.22); padding: 18px; border: 1px solid #eee5d5; }
+    .cart-head { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .cart-head h3 { margin:0; color:var(--green); }
+    .cart-items { max-height: 210px; overflow:auto; margin: 12px 0; }
+    .cart-row { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:9px 0; border-bottom:1px solid #eee; font-size:.9rem; }
+    .qty-controls { display:flex; align-items:center; gap:8px; }
+    .qty-controls button, .cart-close { border:0; border-radius:8px; background:#edf2ed; color:var(--green); padding:5px 9px; font-weight:800; }
+    .cart-total { display:flex; justify-content:space-between; font-weight:800; color:var(--green); padding:8px 0 13px; }
+    .cart-actions { display:flex; gap:8px; }
+    .cart-actions .btn { flex:1; padding:10px 12px; }
+    .cart-fab { position:fixed; right:20px; bottom:20px; z-index:29; border:0; border-radius:999px; padding:13px 18px; background:var(--gold); color:#252014; font-weight:900; box-shadow:var(--shadow); }
+    .cart-panel[hidden], .cart-fab[hidden] { display:none; }
+    .product-image { position:relative; }
+    .product-image img { width:100%; height:165px; object-fit:cover; display:block; }
+    .photo-change { position:absolute; bottom:10px; right:10px; border:0; border-radius:999px; background:rgba(255,255,255,.94); color:var(--green); padding:7px 11px; font-size:.78rem; font-weight:800; }
+    .photo-input { display:none; }
+    @media (max-width:540px) { .cart-panel { right:10px; bottom:10px; width:calc(100vw - 20px); } .cart-fab { right:12px; bottom:12px; } }
+
+    @media (max-width: 800px) {
+      .nav-links { display: none; position: absolute; top: 69px; left: 0; right: 0; padding: 20px; background: var(--cream); flex-direction: column; align-items: stretch; border-bottom: 1px solid #eee5d5; }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
+      .nav .nav-order { display: none; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; padding-top: 55px; }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-art { min-height: 300px; }
+      .features { margin-top: 18px; }
+      .products { grid-template-columns: repeat(2,1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 25px; }
+      .about-art { min-height: 250px; }
+    }
+    @media (max-width: 540px) {
+      section { padding: 58px 17px; }
+      .features, .products, .contact-grid { grid-template-columns: 1fr; }
+      .feature { padding: 18px; }
+      .product-image { min-height: 145px; }
+      .hero-inner { padding-left: 17px; padding-right: 17px; }
+      .hero-art { min-height: 265px; }
+      .float-tag { font-size: .8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Fresh crunch, happy moments — welcome to Sri Anand Mixture Point!</div>
+  <header>
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#home">
+        <span class="brand-mark">🥜</span>
+        <span>SRI ANAND<small>MIXTURE POINT</small></span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#home">Home</a><a href="#menu">Our Menu</a><a href="#about">About</a><a href="#contact">Contact</a>
+      </div>
+      <a class="btn btn-dark nav-order" href="#menu">Explore Menu</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">A little crunch. A lot of happiness.</div>
+          <h1>Good snacks.<br><span style="color:var(--gold)">Great moments.</span></h1>
+          <p>Bring home the joy of tasty, crunchy snacks. Explore the favourites at Sri Anand Mixture Point and place your order with ease.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#menu">Explore Our Menu <span>→</span></a>
+            <a class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,.45)" href="#contact">Get in Touch</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Illustration of a bowl of mixture">
+          <div class="food-orbit">
+            <div class="food-plate">🥣</div>
+            <div class="float-tag tag-one">✨ Fresh & Tasty</div>
+            <div class="float-tag tag-two">❤️ Made for sharing</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container features">
+      <article class="feature"><div class="feature-icon">🌶️</div><h3>Full of Flavour</h3><p>A delicious snack experience in every bite.</p></article>
+      <article class="feature"><div class="feature-icon">🥜</div><h3>Crunchy Goodness</h3><p>Snack-time favourites for every occasion.</p></article>
+      <article class="feature"><div class="feature-icon">🎁</div><h3>Share the Joy</h3><p>Perfect for family time and get-togethers.</p></article>
+    </div>
+
+    <section id="menu">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Tasty picks</div>
+          <h2>Explore Our Menu</h2>
+          <p>Choose your favourites, add them to your cart, and check out through WhatsApp. Set your real prices before publishing.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Filter menu">
+          <button class="filter active" data-filter="all">All Items</button>
+          <button class="filter" data-filter="mixture">Mixtures</button>
+          <button class="filter" data-filter="snacks">Snacks</button>
+          <button class="filter" data-filter="special">Specials</button>
+        </div>
+        <div class="products" id="productGrid">
+          <article class="product" data-category="mixture"><div class="product-image" id="productImage1">🥣
+      <button class="photo-change" type="button" data-photo="1">Change photo</button>
+      <input class="photo-input" type="file" accept="image/*" id="photoInput1">
+    </div><div class="product-body"><h3>Classic Mixture</h3><p>A crunchy and flavourful all-time favourite.</p><div class="product-bottom"><span class="price">Set price</span><button class="small-btn add-cart" data-item="Classic Mixture" data-price="0">Add to Cart</button></div></div></article>
+          <article class="product" data-category="mixture"><div class="product-image" id="productImage2">🌶️
+      <button class="photo-change" type="button" data-photo="2">Change photo</button>
+      <input class="photo-input" type="file" accept="image/*" id="photoInput2">
+    </div><div class="product-body"><h3>Spicy Mixture</h3><p>A bold, spicy snack for flavour lovers.</p><div class="product-bottom"><span class="price">Set price</span><button class="small-btn add-cart" data-item="Spicy Mixture" data-price="0">Add to Cart</button></div></div></article>
+          <article class="product" data-category="snacks"><div class="product-image" id="productImage3">🧆
+      <button class="photo-change" type="button" data-photo="3">Change photo</button>
+      <input class="photo-input" type="file" accept="image/*" id="photoInput3">
+    </div><div class="product-body"><h3>Crunchy Boondi</h3><p>Light, crispy little bites for snack time.</p><div class="product-bottom"><span class="price">Set price</span><button class="small-btn add-cart" data-item="Crunchy Boondi" data-price="0">Add to Cart</button></div></div></article>
+          <article class="product" data-category="snacks"><div class="product-image" id="productImage4">🍘
+      <button class="photo-change" type="button" data-photo="4">Change photo</button>
+      <input class="photo-input" type="file" accept="image/*" id="photoInput4">
+    </div><div class="product-body"><h3>Traditional Snacks</h3><p>Enjoy classic-style savoury snack favourites.</p><div class="product-bottom"><span class="price">Set price</span><button class="small-btn add-cart" data-item="Traditional Snacks" data-price="0">Add to Cart</button></div></div></article>
+          <article class="product" data-category="special"><div class="product-image" id="productImage5">🥜
+      <button class="photo-change" type="button" data-photo="5">Change photo</button>
+      <input class="photo-input" type="file" accept="image/*" id="photoInput5">
+    </div><div class="product-body"><h3>Peanut Special</h3><p>A nutty, crunchy treat to enjoy anytime.</p><div class="product-bottom"><span class="price">Set price</span><button class="small-btn add-cart" data-item="Peanut Special" data-price="0">Add to Cart</button></div></div></article>
+          <article class="product" data-category="special"><div class="product-image" id="productImage6">⭐
+      <button class="photo-change" type="button" data-photo="6">Change photo</button>
+      <input class="photo-input" type="file" accept="image/*" id="photoInput6">
+    </div><div class="product-body"><h3>House Special</h3><p>Ask us about today's special snack selection.</p><div class="product-bottom"><span class="price">Set price</span><button class="small-btn add-cart" data-item="House Special" data-price="0">Add to Cart</button></div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-art">🥨</div>
+        <div class="about-copy">
+          <div class="eyebrow" style="color:#a66d0d">Our story</div>
+          <h2>A snack for every happy moment</h2>
+          <p>Welcome to <strong>Sri Anand Mixture Point</strong> — your place to discover tasty mixtures and savoury snacks. We believe good food brings people together, whether it's a quick evening bite or a family celebration.</p>
+          <ul class="ticks"><li>A selection of savoury snack favourites</li><li>Easy ordering and friendly service</li><li>Great for sharing with family and friends</li></ul>
+          <a class="btn btn-dark" href="#contact">Contact Our Team</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="eyebrow">Ready for a crunchy treat?</div>
+        <h2>Your snack-time starts here.</h2>
+        <p>Send us a message to ask about today's available items, prices and order details.</p>
+        <button class="btn btn-primary" id="whatsappCta">Message Us on WhatsApp ↗</button>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Say hello</div><h2>Contact Us</h2><p>We'd love to hear from you. Update the sample details below with your business information.</p></div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Sri Anand Mixture Point</h3>
+            <div class="contact-line"><span>📍</span><div><strong>Location</strong><br> Add your shop address here</div></div>
+            <div class="contact-line"><span>📞</span><div><strong>Phone</strong><br> Add your contact number here</div></div>
+            <div class="contact-line"><span>🕒</span><div><strong>Business hours</strong><br> Add your opening and closing times</div></div>
+            <button class="btn btn-dark" id="contactWhatsapp">Chat on WhatsApp</button>
+          </div>
+          <div class="contact-card">
+            <h3>Send an enquiry</h3>
+            <form class="contact-form" id="enquiryForm">
+              <input id="customerName" type="text" placeholder="Your name" required>
+              <input id="customerPhone" type="tel" placeholder="Your phone number">
+              <textarea id="customerMessage" placeholder="What would you like to know?" required></textarea>
+              <button class="btn btn-primary" type="submit">Send Enquiry via WhatsApp ↗</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <button class="cart-fab" id="cartFab" type="button">🛒 Cart (<span id="cartCount">0</span>)</button>
+  <aside class="cart-panel" id="cartPanel" hidden aria-label="Shopping cart">
+    <div class="cart-head"><h3>Your Shopping Cart</h3><button class="cart-close" id="cartClose" type="button" aria-label="Close cart">✕</button></div>
+    <div class="cart-items" id="cartItems"><p style="color:#68736a">Your cart is empty.</p></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <div class="cart-actions">
+      <button class="btn btn-outline" id="clearCart" type="button">Clear</button>
+      <button class="btn btn-dark" id="checkoutCart" type="button">WhatsApp Order</button>
+    </div>
+    <p style="font-size:.76rem;color:#68736a;margin:10px 0 0">Add your actual prices in the product buttons before taking orders.</p>
+  </aside>
+
+  <footer>© <span id="year"></span> Sri Anand Mixture Point. All rights reserved.</footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // IMPORTANT: Replace this with your WhatsApp number including country code.
+    // Example for India: 919876543210 (no +, spaces or dashes).
+    const WHATSAPP_NUMBER = "91XXXXXXXXXX";
+
+    const toast = (message) => {
+      const box = document.getElementById("toast");
+      box.textContent = message;
+      box.classList.add("show");
+      window.clearTimeout(toast.timer);
+      toast.timer = window.setTimeout(() => box.classList.remove("show"), 2800);
+    };
+
+    function openWhatsApp(message) {
+      if (!/^\\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+        toast("Please add your WhatsApp number in the website code first.");
+        return;
+      }
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    // Mobile navigation
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.textContent = "☰";
+    }));
+
+    // Menu category filters
+    document.querySelectorAll(".filter").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".filter").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        const category = button.dataset.filter;
+        document.querySelectorAll(".product").forEach(product => {
+          product.hidden = category !== "all" && product.dataset.category !== category;
+        });
+      });
+    });
+
+    // Shopping cart. Update each button's data-price with your actual price in rupees.
+    const cart = [];
+    const cartPanel = document.getElementById("cartPanel");
+    const cartFab = document.getElementById("cartFab");
+    const cartItems = document.getElementById("cartItems");
+    const cartCount = document.getElementById("cartCount");
+    const cartTotal = document.getElementById("cartTotal");
+
+    function renderCart() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      cartCount.textContent = count;
+      cartTotal.textContent = "₹" + total.toFixed(2);
+      if (!cart.length) {
+        cartItems.innerHTML = '<p style="color:#68736a">Your cart is empty.</p>';
+        return;
+      }
+      cartItems.innerHTML = cart.map((item, index) => `
+        <div class="cart-row">
+          <div><strong>${item.name}</strong><br><small>₹${item.price.toFixed(2)} each</small></div>
+          <div class="qty-controls">
+            <button type="button" data-action="minus" data-index="${index}" aria-label="Decrease quantity">−</button>
+            <strong>${item.qty}</strong>
+            <button type="button" data-action="plus" data-index="${index}" aria-label="Increase quantity">+</button>
+          </div>
+        </div>`).join("");
+    }
+
+    document.querySelectorAll(".add-cart").forEach(button => {
+      button.addEventListener("click", () => {
+        const name = button.dataset.item;
+        const price = Number(button.dataset.price || 0);
+        const existing = cart.find(item => item.name === name);
+        if (existing) existing.qty += 1;
+        else cart.push({ name, price, qty: 1 });
+        renderCart();
+        cartPanel.hidden = false;
+        cartFab.hidden = true;
+        if (price <= 0) toast("Added to cart. Set this item's price in the HTML code before checkout.");
+      });
+    });
+
+    cartItems.addEventListener("click", event => {
+      const button = event.target.closest("button[data-action]");
+      if (!button) return;
+      const item = cart[Number(button.dataset.index)];
+      if (!item) return;
+      if (button.dataset.action === "plus") item.qty += 1;
+      if (button.dataset.action === "minus") item.qty -= 1;
+      if (item.qty <= 0) cart.splice(Number(button.dataset.index), 1);
+      renderCart();
+    });
+
+    cartFab.addEventListener("click", () => {
+      cartPanel.hidden = false;
+      cartFab.hidden = true;
+    });
+    document.getElementById("cartClose").addEventListener("click", () => {
+      cartPanel.hidden = true;
+      cartFab.hidden = false;
+    });
+    document.getElementById("clearCart").addEventListener("click", () => {
+      cart.length = 0;
+      renderCart();
+      toast("Cart cleared.");
+    });
+    document.getElementById("checkoutCart").addEventListener("click", () => {
+      if (!cart.length) { toast("Your cart is empty."); return; }
+      if (cart.some(item => item.price <= 0)) {
+        toast("Please set actual prices for all selected items before checkout.");
+        return;
+      }
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const lines = cart.map(item => `${item.name} x ${item.qty} = ₹${(item.price * item.qty).toFixed(2)}`).join("\n");
+      openWhatsApp(`Hello Sri Anand Mixture Point! I would like to place this order:\n${lines}\nTotal: ₹${total.toFixed(2)}`);
+    });
+
+    // Change product photos from your device. Preview stays until the page is reloaded.
+    document.querySelectorAll(".photo-change").forEach(button => {
+      button.addEventListener("click", () => {
+        document.getElementById("photoInput" + button.dataset.photo).click();
+      });
+    });
+    document.querySelectorAll(".photo-input").forEach(input => {
+      input.addEventListener("change", () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        if (!file.type.startsWith("image/")) { toast("Please choose an image file."); return; }
+        const reader = new FileReader();
+        reader.onload = () => {
+          const container = document.getElementById("productImage" + input.id.replace("photoInput", ""));
+          let img = container.querySelector("img");
+          if (!img) {
+            img = document.createElement("img");
+            container.insertBefore(img, container.firstChild);
+          }
+          img.src = reader.result;
+          img.alt = "Selected product photo";
+          const emoji = [...container.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+          if (emoji) emoji.textContent = "";
+          toast("Photo preview updated. Replace the image file in your website folder to keep it permanently.");
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    document.getElementById("whatsappCta").addEventListener("click", () => {
+      openWhatsApp("Hello Sri Anand Mixture Point! Please share your menu and prices.");
+    });
+    document.getElementById("contactWhatsapp").addEventListener("click", () => {
+      openWhatsApp("Hello Sri Anand Mixture Point! I would like to make an enquiry.");
+    });
+
+    // Enquiry form: opens WhatsApp with the customer's message
+    document.getElementById("enquiryForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const name = document.getElementById("customerName").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+      const message = document.getElementById("customerMessage").value.trim();
+      if (!name || !message) {
+        toast("Please enter your name and message.");
+        return;
+      }
+      openWhatsApp(`Enquiry for Sri Anand Mixture Point\nName: ${name}\nPhone: ${phone || "Not provided"}\nMessage: ${message}`);
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
