@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Anand Mixture Point</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+  body{background:#f4f6f8;color:#1e293b;padding-bottom:80px}
+  .bar{background:#028090;color:#fff;font-size:12px;font-weight:700;padding:8px;text-align:center}
+  header{background:#0f6b38;color:#fff;padding:12px 14px;position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:42px;height:42px;border-radius:50%;background:#ffd166;color:#094925;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .brand h1{font-size:16px}
+  .brand p{font-size:11px;color:#fde68a}
+  .cbtn{background:#17a2b8;color:#fff;border:0;width:42px;height:42px;border-radius:50%;font-size:18px;position:relative;cursor:pointer}
+  .cnt{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:11px;font-weight:700;min-width:19px;height:19px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+  .srch{padding:10px 12px 4px;max-width:900px;margin:auto}
+  .srch input{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #cbd5e1;font-size:14px}
+  .cats{display:flex;gap:8px;overflow-x:auto;padding:8px 12px;max-width:900px;margin:auto}
+  .cats::-webkit-scrollbar{display:none}
+  .cat{background:#fff;border:1.5px solid #e2e8f0;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
+  .cat.on{background:#0f6b38;color:#fff;border-color:#0f6b38}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:8px 12px;max-width:900px;margin:auto}
+  @media(min-width:680px){.grid{grid-template-columns:repeat(3,1fr)}}
+  .card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;display:flex;flex-direction:column}
+  .vis{height:85px;display:flex;align-items:center;justify-content:center;font-size:36px;position:relative}
+  .hot{position:absolute;top:6px;left:6px;background:#dc2626;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px}
+  .cb{padding:10px;text-align:center;display:flex;flex-direction:column;gap:4px;flex:1}
+  .en{font-size:14px;font-weight:800;color:#0f172a}
+  .te{font-size:11px;color:#64748b}
+  .pr{font-size:15px;font-weight:800;color:#b45309}
+  .vars{display:flex;justify-content:center;gap:4px;flex-wrap:wrap}
+  .vb{border:1px solid #cbd5e1;background:#f8fafc;font-size:11px;font-weight:700;padding:4px 8px;border-radius:6px;cursor:pointer}
+  .vb.on{background:#7c3aed;color:#fff;border-color:#7c3aed}
+  .qbox{display:flex;align-items:center;border:1.5px solid #0f6b38;border-radius:8px;overflow:hidden;height:34px;margin-top:auto}
+  .qbox button{background:#ecfdf5;border:0;width:36px;height:100%;font-size:18px;font-weight:800;color:#0f6b38;cursor:pointer}
+  .qbox span{flex:1;font-size:14px;font-weight:800}
+  .bbar{position:fixed;bottom:0;left:0;right:0;background:#094925;color:#fff;padding:12px 14px;display:none;justify-content:space-between;align-items:center;z-index:40}
+  .bbar strong{color:#fde047;font-size:16px}
+  .vbtn{background:#f59e0b;color:#000;border:0;padding:9px 14px;border-radius:8px;font-weight:800;font-size:13px;cursor:pointer}
+  .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;align-items:flex-end;justify-content:center}
+  .ov.open{display:flex}
+  .sh{background:#fff;width:100%;max-width:520px;max-height:92vh;border-radius:18px 18px 0 0;padding:16px;overflow-y:auto}
+  .mh{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0;padding-bottom:8px;margin-bottom:10px}
+  .ci{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dashed #e2e8f0;font-size:13px}
+  .al{padding:9px;border-radius:8px;font-size:12px;font-weight:700;margin:8px 0;text-align:center}
+  .w{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+  .ok{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0}
+  .fg{margin-bottom:8px}
+  .fg label{display:block;font-size:12px;font-weight:700;margin-bottom:3px}
+  .fg input,.fg textarea{width:100%;padding:8px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:13px}
+  .gbtn,.wabtn{width:100%;border:0;padding:12px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;margin-top:6px;color:#fff}
+  .gbtn{background:#2563eb}
+  .wabtn{background:#16a34a}
+  .wabtn:disabled{background:#94a3b8;cursor:not-allowed}
+  .qrbox{border:1.5px solid #cbd5e1;border-radius:12px;padding:12px;text-align:center;background:#f8fafc;margin:10px 0}
+  .qrbox img{width:190px;height:190px;border-radius:8px;border:1px solid #e2e8f0;margin:6px auto;display:block}
+</style>
+</head>
+<body>
+<div class="bar">Min Order ₹100 | Above ₹300 FREE Delivery (within 3 km) | 0-1km ₹15 • 1-2km ₹30 • 2-3km ₹45</div>
+<header>
+  <div class="brand">
+    <div class="logo">SMP</div>
+    <div>
+      <h1>Sri Anand Mixture Point</h1>
+      <p>Opp. Phanindra Scan, Danavaipeta</p>
+    </div>
+  </div>
+  <button class="cbtn" onclick="openC()">🛒<span class="cnt" id="cnt">0</span></button>
+</header>
+<div class="srch"><input id="q" placeholder="Search items (e.g., Mirchi Bajji, Mixture, Batani, Slice)..." oninput="render()"></div>
+<div class="cats">
+  <button class="cat on" onclick="setC('All',this)">All (45)</button>
+  <button class="cat" onclick="setC('Bajji & Samosa',this)">Bajji &amp; Samosa</button>
+  <button class="cat" onclick="setC('Mixture',this)">Mixture</button>
+  <button class="cat" onclick="setC('Batani',this)">Batani</button>
+  <button class="cat" onclick="setC('Slice',this)">Slice</button>
+</div>
+<main class="grid" id="grid"></main>
+<div class="bbar" id="bbar"><div><span id="bi">0 Items</span> • <strong id="bt">₹0</strong></div><button class="vbtn" onclick="openC()">Checkout →</button></div>
+
+<div class="ov" id="ov" onclick="if(event.target===this)closeC()">
+  <div class="sh">
+    <div class="mh"><h3>Your Cart &amp; Checkout</h3><button onclick="closeC()" style="border:0;background:#f1f5f9;width:30px;height:30px;border-radius:50%;font-weight:700">✕</button></div>
+    <div id="clist"></div>
+    <div id="dstat" class="al w"></div>
+    <button class="gbtn" onclick="getGPS()">📡 Detect My Exact GPS Location (Required)</button>
+    <div id="gpsInfo" style="font-size:12px;font-weight:700;color:#0f6b38;margin:6px 0;text-align:center"></div>
+    <div class="fg"><label>Customer Name *</label><input id="cn" placeholder="Enter your name"></div>
+    <div class="fg"><label>Mobile Number *</label><input id="cp" type="tel" placeholder="10-digit mobile number"></div>
+    <div class="fg"><label>Full Delivery Address *</label><textarea id="ca" rows="2" placeholder="House no, Street, Landmark"></textarea></div>
+
+    <div class="qrbox">
+      <div style="font-size:13px;font-weight:800;color:#0f172a">Scan BharatPe QR &amp; Pay Exact Total</div>
+      <div id="qrAmt" style="font-size:18px;font-weight:900;color:#0f6b38;margin-top:2px">₹0</div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi%3A%2F%2Fpay%3Fpa%3DBHARATPE2G0S0G6%40yesbankltd%26pn%3DSri%2520Anand%2520Mixture%2520Point%26cu%3DINR" alt="BharatPe QR">
+      <div style="font-size:11px;color:#475569">Scan using PhonePe / GPay / Paytm / BharatPe</div>
+      <div class="fg" style="margin-top:8px;text-align:left">
+        <label>Enter 12-Digit UPI Ref / UTR Number (Required) *</label>
+        <input id="utr" type="tel" maxlength="12" placeholder="e.g., 432512345678" oninput="renderC()">
+      </div>
+    </div>
+
+    <button class="wabtn" id="wabtn" onclick="sendWA()" disabled>📲 Confirm Order on WhatsApp</button>
+  </div>
+</div>
+
+<script>
+const SHOP_LAT = 17.0044, SHOP_LON = 81.7875, WA = "919393446363";
+const M = [
+  {id:1,en:"Mirchi Bajji",te:"మిర్చి బజ్జీ",c:"Bajji & Samosa",e:"🌶️",bg:"#fef3c7",h:1,v:[{l:"1 Plate (3 pcs)",p:30}]},
+  {id:2,en:"Aloo Bajji",te:"ఆలూ బజ్జీ",c:"Bajji & Samosa",e:"🥔",bg:"#ffedd5",h:0,v:[{l:"1 Plate (3 pcs)",p:30}]},
+  {id:3,en:"Samosa",te:"సమోసా",c:"Bajji & Samosa",e:"🥟",bg:"#fef9c3",h:1,v:[{l:"1 Plate (3 pcs)",p:30}]},
+  {id:4,en:"Nethi Vankaya Bajji",te:"నేతి వంకాయ బజ్జీ",c:"Bajji & Samosa",e:"🍆",bg:"#f3e8ff",h:0,v:[{l:"1 Plate (3 pcs)",p:40}]},
+  {id:5,en:"Perugu Vankaya Bajji",te:"పెరుగు వంకాయ బజ్జీ",c:"Bajji & Samosa",e:"🍆",bg:"#ede9fe",h:0,v:[{l:"1 Plate (3 pcs)",p:40}]},
+  {id:6,en:"Nethi Mirchi Bajji",te:"నేతి మిర్చి బజ్జీ",c:"Bajji & Samosa",e:"🌶️",bg:"#fee2e2",h:0,v:[{l:"1 Plate (3 pcs)",p:40}]},
+  {id:7,en:"Nethi Aloo Bajji",te:"నేతి ఆలూ బజ్జీ",c:"Bajji & Samosa",e:"🥔",bg:"#ffedd5",h:0,v:[{l:"1 Plate (3 pcs)",p:40}]},
+  {id:8,en:"Nethi Samosa",te:"నేతి సమోసా",c:"Bajji & Samosa",e:"🥟",bg:"#fef3c7",h:0,v:[{l:"1 Plate (2 pcs)",p:30}]},
+  {id:9,en:"Atukula Mixture",te:"అటుకుల మిక్చర్",c:"Mixture",e:"🥣",bg:"#dcfce7",h:1,v:[{l:"1 Plate",p:40}]},
+  {id:10,en:"Nethi Atukula Mixture",te:"నేతి అటుకుల మిక్చర్",c:"Mixture",e:"🥣",bg:"#d1fae5",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:11,en:"Mirchi Bajji Mixture",te:"మిర్చి బజ్జీ మిక్చర్",c:"Mixture",e:"🌶️",bg:"#fee2e2",h:1,v:[{l:"1 Plate",p:40}]},
+  {id:12,en:"Aloo Bajji Mixture",te:"ఆలూ బజ్జీ మిక్చర్",c:"Mixture",e:"🥣",bg:"#ffedd5",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:13,en:"Cut Bajji Mixture",te:"కట్ బజ్జీ మిక్చర్",c:"Mixture",e:"🥣",bg:"#fef3c7",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:14,en:"Tomato Bajji Mixture",te:"టమోటా బజ్జీ మిక్చర్",c:"Mixture",e:"🍅",bg:"#ffe4e6",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:15,en:"Samosa Mixture",te:"సమోసా మిక్చర్",c:"Mixture",e:"🥟",bg:"#fef9c3",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:16,en:"Nethi Vankaya Bajji Mixture",te:"నేతి వంకాయ బజ్జీ మిక్చర్",c:"Mixture",e:"🍆",bg:"#f3e8ff",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:17,en:"Perugu Bajji Mixture",te:"పెరుగు బజ్జీ మిక్చర్",c:"Mixture",e:"🥣",bg:"#e0f2fe",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:18,en:"Aloo Mixture",te:"ఆలూ మిక్చర్",c:"Mixture",e:"🥔",bg:"#ffedd5",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:19,en:"Egg Mixture",te:"ఎగ్ మిక్చర్",c:"Mixture",e:"🥚",bg:"#fef3c7",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:20,en:"Meal Maker Mixture",te:"మిల్మేకర్ మిక్చర్",c:"Mixture",e:"🥣",bg:"#dcfce7",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:21,en:"Palli Peanut Mixture",te:"పల్లీ మిక్చర్",c:"Mixture",e:"🥜",bg:"#fde68a",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:22,en:"Pachi Tomato Mixture",te:"పచ్చి టమాట మిక్చర్",c:"Mixture",e:"🍅",bg:"#ffe4e6",h:0,v:[{l:"1 Plate",p:40}]},
+  {id:23,en:"Kaju Cashew Mixture",te:"జీడిపప్పు మిక్చర్",c:"Mixture",e:"🌰",bg:"#fef08a",h:1,v:[{l:"1 Plate",p:70}]},
+  {id:24,en:"Masala Batani",te:"మసాలా బటానీ",c:"Batani",e:"🍲",bg:"#dcfce7",h:1,v:[{l:"Half",p:30},{l:"Full",p:40}]},
+  {id:25,en:"Samosa Batani",te:"సమోసా బటానీ",c:"Batani",e:"🍲",bg:"#fef9c3",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:26,en:"Mirchi Bajji Batani",te:"మిర్చి బజ్జీ బటానీ",c:"Batani",e:"🌶️",bg:"#fee2e2",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:27,en:"Aloo Bajji Batani",te:"ఆలూ బజ్జీ బటానీ",c:"Batani",e:"🍲",bg:"#ffedd5",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:28,en:"Tomato Bajji Batani",te:"టమోటా బజ్జీ బటానీ",c:"Batani",e:"🍅",bg:"#ffe4e6",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:29,en:"Cut Bajji Batani",te:"కట్ బజ్జీ బటానీ",c:"Batani",e:"🍲",bg:"#fef3c7",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:30,en:"Vankaya Bajji Batani",te:"వంకాయ బజ్జీ బటానీ",c:"Batani",e:"🍆",bg:"#f3e8ff",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:31,en:"Perugu Bajji Batani",te:"పెరుగు బజ్జీ బటానీ",c:"Batani",e:"🍲",bg:"#e0f2fe",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:32,en:"Aloo Batani",te:"ఆలూ బటానీ",c:"Batani",e:"🥔",bg:"#ffedd5",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:33,en:"Egg Batani",te:"ఎగ్ బటానీ",c:"Batani",e:"🥚",bg:"#fef3c7",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:34,en:"Meal Maker Batani",te:"మిల్మేకర్ బటానీ",c:"Batani",e:"🍲",bg:"#dcfce7",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:35,en:"Palli Batani",te:"పల్లీ బటానీ",c:"Batani",e:"🥜",bg:"#fde68a",h:0,v:[{l:"1 Plate",p:50}]},
+  {id:36,en:"Kaju Cashew Batani",te:"జీడిపప్పు బటానీ",c:"Batani",e:"🌰",bg:"#fef08a",h:1,v:[{l:"1 Plate",p:80}]},
+  {id:37,en:"Tomato Slice",te:"టమోటా స్లైస్",c:"Slice",e:"🍅",bg:"#ffe4e6",h:0,v:[{l:"1 Plate",p:45}]},
+  {id:38,en:"Aloo Slice",te:"ఆలూ స్లైస్",c:"Slice",e:"🥔",bg:"#ffedd5",h:0,v:[{l:"1 Plate",p:45}]},
+  {id:39,en:"Egg Slice",te:"ఎగ్ స్లైస్",c:"Slice",e:"🥚",bg:"#fef3c7",h:0,v:[{l:"1 Plate",p:45}]},
+  {id:40,en:"Onion Slice",te:"ఆనియన్ స్లైస్",c:"Slice",e:"🧅",bg:"#f3e8ff",h:0,v:[{l:"1 Plate",p:45}]},
+  {id:41,en:"Cut Bajji Slice",te:"కట్ బజ్జీ స్లైస్",c:"Slice",e:"🥪",bg:"#fef9c3",h:0,v:[{l:"1 Plate",p:45}]},
+  {id:42,en:"Onion Tomato Slice",te:"ఆనియన్ టమాటా స్లైస్",c:"Slice",e:"🥪",bg:"#ffe4e6",h:0,v:[{l:"1 Plate",p:60}]},
+  {id:43,en:"Tomato Egg Slice",te:"టమోటా ఎగ్ స్లైస్",c:"Slice",e:"🍳",bg:"#fef3c7",h:1,v:[{l:"1 Plate",p:60}]},
+  {id:44,en:"Tomato Aloo Slice",te:"టమోటా ఆలూ స్లైస్",c:"Slice",e:"🥪",bg:"#ffedd5",h:0,v:[{l:"1 Plate",p:60}]},
+  {id:45,en:"Onion Egg Slice",te:"ఆనియన్ ఎగ్ స్లైస్",c:"Slice",e:"🍳",bg:"#ede9fe",h:0,v:[{l:"1 Plate",p:60}]}
+];
+
+let cat = 'All', sv = {}, cart = {}, distKm = null, uLat = null, uLon = null;
+
+function setC(c, b) {
+  cat = c;
+  document.querySelectorAll('.cat').forEach(x => x.classList.remove('on'));
+  b.classList.add('on');
+  render();
+}
+function setV(id, i) { sv[id] = i; render(); }
+function getQ(id, vi) { return cart[id + '-' + vi] ? cart[id + '-' + vi].q : 0; }
+
+function chg(id, d) {
+  const it = M.find(x => x.id === id);
+  const vi = sv[id] || 0;
+  const k = id + '-' + vi;
+  const v = it.v[vi];
+  const cur = cart[k] ? cart[k].q : 0;
+  const nq = Math.max(0, cur + d);
+  if (nq === 0) delete cart[k];
+  else cart[k] = { en: it.en, te: it.te, vl: v.l, p: v.p, q: nq };
+  render();
+  upd();
+}
+
+function render() {
+  const s = document.getElementById('q').value.trim().toLowerCase();
+  document.getElementById('grid').innerHTML = M.filter(x =>
+    (cat === 'All' || x.c === cat) && (!s || x.en.toLowerCase().includes(s) || x.te.includes(s))
+  ).map(x => {
+    const vi = sv[x.id] || 0;
+    const v = x.v[vi];
+    const q = getQ(x.id, vi);
+    const vBtns = x.v.map((o, i) =>
+      `<button class="vb ${i === vi ? 'on' : ''}" onclick="setV(${x.id},${i})">${o.l}</button>`
+    ).join('');
+    return `<div class="card">
+      <div class="vis" style="background:${x.bg}">${x.h ? '<span class="hot">SPECIAL</span>' : ''}${x.e}</div>
+      <div class="cb">
+        <div class="en">${x.en}</div>
+        <div class="te">${x.te}</div>
+        <div class="pr">₹${v.p}</div>
+        <div class="vars">${vBtns}</div>
+        <div class="qbox">
+          <button onclick="chg(${x.id},-1)">−</button>
+          <span>${q}</span>
+          <button onclick="chg(${x.id},1)">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function calc() {
+  const items = Object.values(cart);
+  const sub = items.reduce((a, b) => a + b.p * b.q, 0);
+  const cnt = items.reduce((a, b) => a + b.q, 0);
+  let del = 0;
+  if (distKm !== null) {
+    if (sub >= 300 && distKm <= 3) del = 0;
+    else if (distKm <= 1) del = 15;
+    else if (distKm <= 2) del = 30;
+    else del = 45;
+  }
+  return { items, sub, cnt, del, tot: sub + del };
+}
+
+function upd() {
+  const { cnt, sub } = calc();
+  document.getElementById('cnt').innerText = cnt;
+  const b = document.getElementById('bbar');
+  b.style.display = cnt > 0 ? 'flex' : 'none';
+  document.getElementById('bi').innerText = cnt + ' Items';
+  document.getElementById('bt').innerText = '₹' + sub;
+  renderC();
+}
+
+function getGPS() {
+  const g = document.getElementById('gpsInfo');
+  if (!navigator.geolocation) { g.innerText = 'GPS not supported'; return; }
+  g.innerText = 'Detecting exact location...';
+  navigator.geolocation.getCurrentPosition(pos => {
+    uLat = pos.coords.latitude;
+    uLon = pos.coords.longitude;
+    const R = 6371;
+    const dLat = (uLat - SHOP_LAT) * Math.PI / 180;
+    const dLon = (uLon - SHOP_LON) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(SHOP_LAT * Math.PI / 180) * Math.cos(uLat * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+    distKm = +(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))).toFixed(2);
+    const m = Math.round(distKm * 1000);
+    g.innerText = `📍 Distance: ${m < 1000 ? m + ' meters' : distKm + ' km'} from Danavaipeta`;
+    renderC();
+  }, () => {
+    g.innerText = '⚠️ Please allow Location permission in browser settings.';
+  }, { enableHighAccuracy: true });
+}
+
+function renderC() {
+  const { items, sub, del, tot } = calc();
+  const cl = document.getElementById('clist');
+  const ds = document.getElementById('dstat');
+  const wb = document.getElementById('wabtn');
+  document.getElementById('qrAmt').innerText = '₹' + tot;
+  if (!items.length) {
+    cl.innerHTML = '<p style="text-align:center;color:#64748b;padding:10px">Cart is empty</p>';
+    ds.className = 'al w';
+    ds.innerText = 'Minimum order ₹100 required';
+    wb.disabled = true;
+    return;
+  }
+  cl.innerHTML = items.map(i => `<div class="ci"><div><b>${i.en}</b> (${i.vl}) × ${i.q}</div><div><b>₹${i.p * i.q}</b></div></div>`).join('') +
+    `<div class="ci"><span>Items Total</span><b>₹${sub}</b></div>` +
+    `<div class="ci"><span>Delivery Charge</span><b>${distKm === null ? 'Detect GPS first' : (del === 0 ? 'FREE (₹0)' : '₹' + del)}</b></div>` +
+    `<div class="ci" style="font-size:16px"><b>Grand Total</b><b style="color:#0f6b38">₹${tot}</b></div>`;
+  const utrVal = document.getElementById('utr').value.trim();
+  const validUtr = /^\d{12}$/.test(utrVal);
+  if (sub < 100) {
+    ds.className = 'al w';
+    ds.innerText = `Add ₹${100 - sub} more (Min Order ₹100)`;
+    wb.disabled = true;
+  } else if (distKm === null) {
+    ds.className = 'al w';
+    ds.innerText = 'Tap "Detect My Exact GPS Location" below to continue';
+    wb.disabled = true;
+  } else {
+    ds.className = 'al ok';
+    ds.innerText = del === 0 ? `FREE Delivery applied (${distKm} km)` : `Delivery ₹${del} applied (${distKm} km)`;
+    wb.disabled = !validUtr;
+  }
+}
+
+function openC() { renderC(); document.getElementById('ov').classList.add('open'); }
+function closeC() { document.getElementById('ov').classList.remove('open'); }
+
+function sendWA() {
+  const n = document.getElementById('cn').value.trim();
+  const p = document.getElementById('cp').value.trim();
+  const a = document.getElementById('ca').value.trim();
+  const utr = document.getElementById('utr').value.trim();
+  if (!n || !p || !a) { alert('Please fill Name, Mobile & Address'); return; }
+  if (!/^\d{12}$/.test(utr)) { alert('Please enter valid 12-digit UTR number'); return; }
+  const { items, sub, del, tot } = calc();
+  const txt = `*Sri Anand Mixture Point - New Order*\n\n*Name:* ${n}\n*Phone:* ${p}\n*Address:* ${a}\n*GPS Distance:* ${distKm} km (One-Way)\n*Map Pin:* https://maps.google.com/?q=${uLat},${uLon}\n\n*Items:*\n${items.map((x, i) => `${i + 1}. ${x.en} (${x.vl}) x ${x.q} = ₹${x.p * x.q}`).join('\n')}\n\n*Items Total:* ₹${sub}\n*Delivery:* ₹${del}\n*Grand Total:* ₹${tot}\n*BharatPe UTR:* ${utr} (Attaching Screenshot)`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(txt)}`, '_blank');
+}
+
+render();
+</script>
+</body>
+</html>
