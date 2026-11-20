@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sri Anand Mixture Point | శ్రీ ఆనంద్ మిక్చర్ పాయింట్</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f6b38;
+      --primary-dark: #094925;
+      --teal: #17a2b8;
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', 'Noto Sans Telugu', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 85px;
+    }
+    .offer-bar {
+      background: linear-gradient(90deg, #00a896, #028090);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 8px 12px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-badge {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #ffd166; color: #094925;
+      font-weight: 800; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #fff; flex-shrink: 0;
+    }
+    .brand h1 { font-size: 16.5px; line-height: 1.25; font-weight: 800; color: #fff; }
+    .brand p { font-size: 11px; color: #fde68a; font-weight: 500; }
+    .cart-btn {
+      background: var(--teal); color: #fff; border: none;
+      width: 46px; height: 46px; border-radius: 50%;
+      position: relative; cursor: pointer; font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25); flex-shrink: 0;
+    }
+    .cart-count {
+      position: absolute; top: -4px; right: -4px;
+      background: #ef4444; color: #fff; font-size: 11px; font-weight: 700;
+      min-width: 20px; height: 20px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 5px; border: 2px solid #fff;
+    }
+    .search-wrap { padding: 12px 14px 6px; max-width: 900px; margin: 0 auto; }
+    .search-input {
+      width: 100%; padding: 10px 14px; border-radius: 10px;
+      border: 1.5px solid #cbd5e1; font-size: 14px; font-family: inherit;
+      outline: none; background: #fff;
+    }
+    .search-input:focus { border-color: var(--primary); }
+    .categories {
+      display: flex; gap: 8px; overflow-x: auto;
+      padding: 10px 14px; max-width: 900px; margin: 0 auto;
+      scrollbar-width: none;
+    }
+    .categories::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      background: #fff; border: 1.5px solid #e2e8f0;
+      padding: 8px 14px; border-radius: 20px;
+      font-size: 13px; font-weight: 700; color: var(--text);
+      white-space: nowrap; cursor: pointer; font-family: inherit;
+    }
+    .cat-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 12px; padding: 8px 14px 20px; max-width: 900px; margin: 0 auto;
+    }
+    @media (min-width: 680px) {
+      .grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    }
+    .card {
+      background: var(--card); border-radius: 14px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex; flex-direction: column; justify-content: space-between;
+      border: 1px solid #eef2f6;
+    }
+    .card-visual {
+      height: 105px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; padding: 10px; text-align: center;
+    }
+    .emoji-icon { font-size: 42px; }
+    .badge-hot {
+      position: absolute; top: 8px; left: 8px;
+      background: #dc2626; color: #fff; font-size: 10px;
+      font-weight: 700; padding: 3px 7px; border-radius: 10px;
+    }
+    .card-body {
+      padding: 10px; text-align: center;
+      display: flex; flex-direction: column; gap: 4px; flex: 1;
+    }
+    .item-title { font-size: 14.5px; font-weight: 800; color: #0f172a; line-height: 1.25; }
+    .item-te { font-size: 12px; color: #475569; font-weight: 600; }
+    .item-price { font-size: 16px; font-weight: 800; color: #b45309; margin-top: 2px; }
+    .variants { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; margin: 3px 0; }
+    .var-btn {
+      border: 1px solid #cbd5e1; background: #f8fafc; color: #334155;
+      font-size: 11px; font-weight: 700; padding: 4px 8px;
+      border-radius: 6px; cursor: pointer; font-family: inherit;
+    }
+    .var-btn.active { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+    .action-row { display: flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 6px; }
+    .qty-box {
+      display: flex; align-items: center; border: 1px solid #cbd5e1;
+      border-radius: 8px; overflow: hidden; height: 34px; flex: 1;
+    }
+    .qty-box button {
+      background: #f1f5f9; border: none; width: 26px; height: 100%;
+      font-size: 16px; font-weight: 700; cursor: pointer; color: #1e293b;
+    }
+    .qty-box span { flex: 1; text-align: center; font-size: 13px; font-weight: 700; }
+    .add-btn {
+      background: var(--teal); color: #fff; border: none; border-radius: 8px;
+      height: 34px; padding: 0 12px; font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    .bottom-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--primary-dark); color: #fff; padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 99; box-shadow: 0 -3px 12px rgba(0,0,0,0.2);
+    }
+    .bottom-info { font-size: 13px; }
+    .bottom-info strong { font-size: 16px; color: #fde047; }
+    .view-cart-btn {
+      background: #f59e0b; color: #000; border: none;
+      padding: 10px 16px; border-radius: 10px;
+      font-weight: 800; font-size: 14px; cursor: pointer; font-family: inherit;
+    }
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+      z-index: 200; align-items: flex-end; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-sheet {
+      background: #fff; width: 100%; max-width: 540px; max-height: 92vh;
+      border-radius: 20px 20px 0 0; padding: 18px; overflow-y: auto;
+    }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 12px;
+    }
+    .close-btn {
+      background: #f1f5f9; border: none; width: 32px; height: 32px;
+      border-radius: 50%; font-size: 18px; cursor: pointer;
+    }
+    .cart-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px dashed #e2e8f0; gap: 8px;
+    }
+    .cart-item-name { font-size: 13.5px; font-weight: 700; }
+    .cart-item-meta { font-size: 11.5px; color: var(--muted); }
+    .cart-controls { display: flex; align-items: center; gap: 6px; }
+    .cart-controls button {
+      width: 26px; height: 26px; border-radius: 6px; border: 1px solid #cbd5e1;
+      background: #f8fafc; font-weight: 700; cursor: pointer;
+    }
+    .box-panel {
+      background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 12px;
+      padding: 12px; margin: 12px 0;
+    }
+    .box-panel h4 { font-size: 13.5px; margin-bottom: 8px; color: #0f172a; }
+    .gps-btn {
+      width: 100%; background: #2563eb; color: #fff; border: none;
+      padding: 11px; border-radius: 9px; font-size: 13.5px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+    }
+    .gps-status {
+      margin-top: 8px; font-size: 12.5px; font-weight: 600;
+      padding: 8px; border-radius: 8px; display: none;
+    }
+    .bill-summary {
+      background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 12px;
+      padding: 12px; margin: 12px 0; font-size: 13.5px;
+    }
+    .bill-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .bill-total {
+      display: flex; justify-content: space-between; border-top: 1.5px dashed #f59e0b;
+      padding-top: 8px; margin-top: 6px; font-size: 17px; font-weight: 800; color: #0f6b38;
+    }
+    .pay-box {
+      background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 12px;
+      padding: 12px; margin: 12px 0; text-align: center;
+    }
+    .number-pill {
+      display: inline-block; background: #fff; border: 1.5px dashed #2563eb;
+      padding: 7px 14px; border-radius: 8px; font-size: 18px; font-weight: 800;
+      color: #1e3a8a; letter-spacing: 1px; margin: 6px 0;
+    }
+    .copy-num-btn {
+      display: block; width: 100%; background: #1d4ed8; color: #fff; border: none;
+      padding: 9px; border-radius: 8px; font-weight: 700; font-size: 13px;
+      cursor: pointer; margin-top: 4px; font-family: inherit;
+    }
+    .delivery-alert {
+      padding: 10px; border-radius: 10px; font-size: 12.5px;
+      font-weight: 700; margin: 10px 0; text-align: center;
+    }
+    .alert-warn { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+    .alert-ok { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .form-group { margin-bottom: 10px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 9px 11px; border: 1.5px solid #cbd5e1;
+      border-radius: 8px; font-family: inherit; font-size: 13.5px;
+    }
+    .wa-order-btn {
+      width: 100%; background: #16a34a; color: #fff; border: none;
+      padding: 13px; border-radius: 12px; font-size: 15px;
+      font-weight: 800; cursor: pointer; margin-top: 6px; font-family: inherit;
+    }
+    .wa-order-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+    .toast {
+      position: fixed; top: 75px; left: 50%; transform: translateX(-50%);
+      background: #0f172a; color: #fff; padding: 8px 16px;
+      border-radius: 20px; font-size: 13px; font-weight: 600;
+      z-index: 300; display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="offer-bar">
+    🛵 Min Order ₹100 | Above ₹300 FREE Delivery (within 3 kms) • One-Way ₹15/km • Online Payment Only
+  </div>
+
+  <header>
+    <div class="header-top">
+      <div class="brand">
+        <div class="brand-badge">SMP</div>
+        <div>
+          <h1>Sri Anand Mixture Point</h1>
+          <p>Opp. Phanindra Scan, Danavaipeta • Since 2014</p>
+        </div>
+      </div>
+      <button class="cart-btn" onclick="openCart()">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="search-wrap">
+    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search items (e.g., Mirchi Bajji, Mixture, Batani, Slice)..." oninput="renderProducts()" />
+  </div>
+
+  <div class="categories">
+    <button class="cat-btn active" onclick="setCategory('All', this)">All (45)</button>
+    <button class="cat-btn" onclick="setCategory('Bajji & Samosa', this)">🌶️ Bajji &amp; Samosa</button>
+    <button class="cat-btn" onclick="setCategory('Mixture', this)">🥣 Mixture</button>
+    <button class="cat-btn" onclick="setCategory('Batani', this)">🍲 Batani</button>
+    <button class="cat-btn" onclick="setCategory('Slice', this)">🥪 Slice</button>
+  </div>
+
+  <main class="grid" id="productGrid"></main>
+
+  <div class="bottom-bar" id="bottomBar" style="display:none;">
+    <div class="bottom-info">
+      <span id="barItems">0 Items</span> • Items: <strong id="barTotal">₹0</strong>
+    </div>
+    <button class="view-cart-btn" onclick="openCart()">View Cart &amp; Pay →</button>
+  </div>
+
+  <div class="toast" id="toast">Added to Cart!</div>
+
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3>🛒 Your Order &amp; Online Payment</h3>
+        <button class="close-btn" onclick="closeCart()">✕</button>
+      </div>
+
+      <div id="cartItemsList"></div>
+
+      <div class="box-panel">
+        <h4>📍 Step 1: Auto-Detect Delivery Distance (From Danavaipeta Shop)</h4>
+        <p style="font-size:11.5px;color:#475569;margin-bottom:8px;">
+          Delivery fee is calculated automatically one-way from <strong>Opp. Phanindra Scan, Danavaipeta</strong> at <strong>₹15/km</strong> (FREE above ₹300 within 3 kms).
+        </p>
+        <button type="button" class="gps-btn" onclick="detectGPSLocation()">
+          📡 Detect My Exact GPS Location
+        </button>
+        <div id="gpsStatus" class="gps-status"></div>
+      </div>
+
+      <div class="bill-summary" id="billSummaryBox"></div>
+      <div id="deliveryStatus" class="delivery-alert alert-warn"></div>
+
+      <div class="pay-box">
+        <div style="font-size:12.5px;font-weight:700;color:#1e3a8a;">💳 Step 2: Online Payment Only (No COD)</div>
+        <p style="font-size:11.5px;color:#334155;margin-top:3px;">
+          Open PhonePe / GPay / Paytm → Select <strong>To Mobile Number</strong> → Pay Total Bill to:
+        </p>
+        <div class="number-pill">9393446363</div>
+        <button type="button" class="copy-num-btn" onclick="copyPhoneNumber()">📋 Copy Mobile Number (9393446363)</button>
+      </div>
+
+      <div class="form-group">
+        <label>UPI Transaction ID / UTR Number (After Paying) *</label>
+        <input type="text" id="upiRef" placeholder="Enter 12-digit UTR / Ref ID (e.g., 43251890XXXX)" oninput="updateCartUI()" />
+      </div>
+
+      <div class="form-group">
+        <label>Your Name *</label>
+        <input type="text" id="custName" placeholder="Enter your name" />
+      </div>
+      <div class="form-group">
+        <label>Mobile Number *</label>
+        <input type="tel" id="custPhone" placeholder="10-digit mobile number" />
+      </div>
+      <div class="form-group">
+        <label>Delivery Address / Landmark *</label>
+        <textarea id="custAddress" rows="2" placeholder="House No, Street, Landmark"></textarea>
+      </div>
+
+      <button class="wa-order-btn" id="waOrderBtn" onclick="placeWhatsAppOrder()">
+        📲 Confirm Paid Order on WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const WHATSAPP_NUMBER = "919393446363";
+    const SHOP_LAT = 17.0054;
+    const SHOP_LON = 81.7876;
+    const MIN_ORDER = 100;
+    const FREE_DELIVERY_MIN = 300;
+    const FREE_DELIVERY_MAX_KM = 3.0;
+    const RATE_PER_KM = 15;
+
+    const MENU = [
+      { id: 1, en: "Mirchi Bajji", te: "మిర్చి బజ్జీ", cat: "Bajji & Samosa", emoji: "🌶️", bg: "#fef3c7", hot: true, variants: [{ label: "1 Plate (3 Pcs)", price: 30 }] },
+      { id: 2, en: "Aloo Bajji", te: "ఆలూ బజ్జీ", cat: "Bajji & Samosa", emoji: "🥔", bg: "#ffedd5", variants: [{ label: "1 Plate (3 Pcs)", price: 30 }] },
+      { id: 3, en: "Samosa", te: "సమోసా", cat: "Bajji & Samosa", emoji: "🥟", bg: "#fef9c3", hot: true, variants: [{ label: "1 Plate (3 Pcs)", price: 30 }] },
+      { id: 4, en: "Nethi Vankaya Bajji", te: "నేతి వంకాయ బజ్జీ", cat: "Bajji & Samosa", emoji: "🍆", bg: "#f3e8ff", variants: [{ label: "1 Plate (3 Pcs)", price: 40 }] },
+      { id: 5, en: "Perugu Vankaya Bajji", te: "పెరుగు వంకాయ బజ్జీ", cat: "Bajji & Samosa", emoji: "🍆", bg: "#ede9fe", variants: [{ label: "1 Plate (3 Pcs)", price: 40 }] },
+      { id: 6, en: "Nethi Mirchi Bajji", te: "నేతి మిర్చి బజ్జీ", cat: "Bajji & Samosa", emoji: "🌶️", bg: "#fee2e2", variants: [{ label: "1 Plate (3 Pcs)", price: 40 }] },
+      { id: 7, en: "Nethi Aloo Bajji", te: "నేతి ఆలూ బజ్జీ", cat: "Bajji & Samosa", emoji: "🥔", bg: "#ffedd5", variants: [{ label: "1 Plate (3 Pcs)", price: 40 }] },
+      { id: 8, en: "Nethi Samosa", te: "నేతి సమోసా", cat: "Bajji & Samosa", emoji: "🥟", bg: "#fef3c7", variants: [{ label: "1 Plate (2 Pcs)", price: 30 }] },
+
+      { id: 9, en: "Atukula Mixture", te: "అటుకుల మిక్చర్", cat: "Mixture", emoji: "🥣", bg: "#dcfce7", hot: true, variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 10, en: "Nethi Atukula Mixture", te: "నేతి అటుకుల మిక్చర్", cat: "Mixture", emoji: "🥣", bg: "#d1fae5", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 11, en: "Mirchi Bajji Mixture", te: "మిర్చి బజ్జీ మిక్చర్", cat: "Mixture", emoji: "🌶️", bg: "#fee2e2", hot: true, variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 12, en: "Aloo Bajji Mixture", te: "ఆలూ బజ్జీ మిక్చర్", cat: "Mixture", emoji: "🥣", bg: "#ffedd5", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 13, en: "Cut Bajji Mixture", te: "కట్ బజ్జీ మిక్చర్", cat: "Mixture", emoji: "🥣", bg: "#fef3c7", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 14, en: "Tomato Bajji Mixture", te: "టమోటా బజ్జీ మిక్చర్", cat: "Mixture", emoji: "🍅", bg: "#ffe4e6", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 15, en: "Samosa Mixture", te: "సమోసా మిక్చర్", cat: "Mixture", emoji: "🥟", bg: "#fef9c3", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 16, en: "Nethi Vankaya Bajji Mixture", te: "నేతి వంకాయ బజ్జీ మిక్చర్", cat: "Mixture", emoji: "🍆", bg: "#f3e8ff", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 17, en: "Perugu Bajji Mixture", te: "పెరుగు బజ్జీ మిక్చర్", cat: "Mixture", emoji: "🥣", bg: "#e0f2fe", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 18, en: "Aloo Mixture", te: "ఆలూ మిక్చర్", cat: "Mixture", emoji: "🥔", bg: "#ffedd5", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 19, en: "Egg Mixture", te: "ఎగ్ మిక్చర్", cat: "Mixture", emoji: "🥚", bg: "#fef3c7", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 20, en: "Meal Maker Mixture", te: "మిల్మేకర్ మిక్చర్", cat: "Mixture", emoji: "🥣", bg: "#dcfce7", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 21, en: "Palli (Peanut) Mixture", te: "పల్లీ మిక్చర్", cat: "Mixture", emoji: "🥜", bg: "#fde68a", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 22, en: "Pachi Tomato Mixture", te: "పచ్చి టమాట మిక్చర్", cat: "Mixture", emoji: "🍅", bg: "#ffe4e6", variants: [{ label: "1 Plate", price: 40 }] },
+      { id: 23, en: "Kaju (Cashew) Mixture", te: "జీడిపప్పు మిక్చర్", cat: "Mixture", emoji: "🌰", bg: "#fef08a", hot: true, variants: [{ label: "1 Plate", price: 70 }] },
+
+      { id: 24, en: "Masala Batani", te: "మసాలా బటానీ", cat: "Batani", emoji: "🍲", bg: "#dcfce7", hot: true, variants: [{ label: "Half", price: 30 }, { label: "Full", price: 40 }] },
+      { id: 25, en: "Samosa Batani", te: "సమోసా బటానీ", cat: "Batani", emoji: "🍲", bg: "#fef9c3", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 26, en: "Mirchi Bajji Batani", te: "మిర్చి బజ్జీ బటానీ", cat: "Batani", emoji: "🌶️", bg: "#fee2e2", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 27, en: "Aloo Bajji Batani", te: "ఆలూ బజ్జీ బటానీ", cat: "Batani", emoji: "🍲", bg: "#ffedd5", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 28, en: "Tomato Bajji Batani", te: "టమోటా బజ్జీ బటానీ", cat: "Batani", emoji: "🍅", bg: "#ffe4e6", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 29, en: "Cut Bajji Batani", te: "కట్ బజ్జీ బటానీ", cat: "Batani", emoji: "🍲", bg: "#fef3c7", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 30, en: "Vankaya Bajji Batani", te: "వంకాయ బజ్జీ బటానీ", cat: "Batani", emoji: "🍆", bg: "#f3e8ff", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 31, en: "Perugu Bajji Batani", te: "పెరుగు బజ్జీ బటానీ", cat: "Batani", emoji: "🍲", bg: "#e0f2fe", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 32, en: "Aloo Batani", te: "ఆలూ బటానీ", cat: "Batani", emoji: "🥔", bg: "#ffedd5", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 33, en: "Egg Batani", te: "ఎగ్ బటానీ", cat: "Batani", emoji: "🥚", bg: "#fef3c7", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 34, en: "Meal Maker Batani", te: "మిల్మేకర్ బటానీ", cat: "Batani", emoji: "🍲", bg: "#dcfce7", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 35, en: "Palli (Peanut) Batani", te: "పల్లీ బటానీ", cat: "Batani", emoji: "🥜", bg: "#fde68a", variants: [{ label: "1 Plate", price: 50 }] },
+      { id: 36, en: "Kaju (Cashew) Batani", te: "జీడిపప్పు బటానీ", cat: "Batani", emoji: "🌰", bg: "#fef08a", hot: true, variants: [{ label: "1 Plate", price: 80 }] },
+
+      { id: 37, en: "Tomato Slice", te: "టమోటా స్లైస్", cat: "Slice", emoji: "🍅", bg: "#ffe4e6", variants: [{ label: "1 Plate", price: 45 }] },
+      { id: 38, en: "Aloo Slice", te: "ఆలూ స్లైస్", cat: "Slice", emoji: "🥔", bg: "#ffedd5", variants: [{ label: "1 Plate", price: 45 }] },
+      { id: 39, en: "Egg Slice", te: "ఎగ్ స్లైస్", cat: "Slice", emoji: "🥚", bg: "#fef3c7", variants: [{ label: "1 Plate", price: 45 }] },
+      { id: 40, en: "Onion Slice", te: "ఆనియన్ స్లైస్", cat: "Slice", emoji: "🧅", bg: "#f3e8ff", variants: [{ label: "1 Plate", price: 45 }] },
+      { id: 41, en: "Cut Bajji Slice", te: "కట్ బజ్జీ స్లైస్", cat: "Slice", emoji: "🥪", bg: "#fef9c3", variants: [{ label: "1 Plate", price: 45 }] },
+      { id: 42, en: "Onion Tomato Slice", te: "ఆనియన్ టమాటా స్లైస్", cat: "Slice", emoji: "🥪", bg: "#ffe4e6", variants: [{ label: "1 Plate", price: 60 }] },
+      { id: 43, en: "Tomato Egg Slice", te: "టమోటా ఎగ్ స్లైస్", cat: "Slice", emoji: "🍳", bg: "#fef3c7", hot: true, variants: [{ label: "1 Plate", price: 60 }] },
+      { id: 44, en: "Tomato Aloo Slice", te: "టమోటా ఆలూ స్లైస్", cat: "Slice", emoji: "🥪", bg: "#ffedd5", variants: [{ label: "1 Plate", price: 60 }] },
+      { id: 45, en: "Onion Egg Slice", te: "ఆనియన్ ఎగ్ స్లైస్", cat: "Slice", emoji: "🍳", bg: "#ede9fe", variants: [{ label: "1 Plate", price: 60 }] }
+    ];
+
+    let activeCategory = 'All';
+    let selectedVar = {};
+    let cardQty = {};
+    let cart = [];
+    let detectedKm = null;
+    let customerMapUrl = "";
+
+    MENU.forEach(item => {
+      selectedVar[item.id] = 0;
+      cardQty[item.id] = 1;
+    });
+
+    function setCategory(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts();
+    }
+
+    function selectVariant(id, idx) {
+      selectedVar[id] = idx;
+      renderProducts();
+    }
+
+    function changeCardQty(id, delta) {
+      cardQty[id] = Math.max(1, (cardQty[id] || 1) + delta);
+      const el = document.getElementById('qty-' + id);
+      if (el) el.innerText = cardQty[id];
+    }
+
+    function renderProducts() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const grid = document.getElementById('productGrid');
+      const filtered = MENU.filter(item => {
+        const matchCat = activeCategory === 'All' || item.cat === activeCategory;
+        const matchSearch = !q || item.en.toLowerCase().includes(q) || item.te.toLowerCase().includes(q);
+        return matchCat && matchSearch;
+      });
+
+      grid.innerHTML = filtered.map(item => {
+        const vIdx = selectedVar[item.id] || 0;
+        const currentVar = item.variants[vIdx];
+        const variantButtons = item.variants.map((v, idx) =>
+          `<button type="button" class="var-btn ${idx === vIdx ? 'active' : ''}" onclick="selectVariant(${item.id}, ${idx})">${v.label}</button>`
+        ).join('');
+
+        return `
+          <div class="card">
+            <div class="card-visual" style="background:${item.bg};">
+              ${item.hot ? '<span class="badge-hot">POPULAR</span>' : ''}
+              <div class="emoji-icon">${item.emoji}</div>
+            </div>
+            <div class="card-body">
+              <div class="item-title">${item.en}</div>
+              <div class="item-te">${item.te}</div>
+              <div class="item-price">₹${currentVar.price}.00</div>
+              <div class="variants">${variantButtons}</div>
+              <div class="action-row">
+                <div class="qty-box">
+                  <button type="button" onclick="changeCardQty(${item.id}, -1)">−</button>
+                  <span id="qty-${item.id}">${cardQty[item.id]}</span>
+                  <button type="button" onclick="changeCardQty(${item.id}, 1)">+</button>
+                </div>
+                <button type="button" class="add-btn" onclick="addToCart(${item.id})">ADD</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function addToCart(id) {
+      const item = MENU.find(i => i.id === id);
+      const vIdx = selectedVar[id] || 0;
+      const variant = item.variants[vIdx];
+      const qty = cardQty[id] || 1;
+      const key = id + '-' + vIdx;
+
+      const existing = cart.find(c => c.key === key);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({ key, en: item.en, te: item.te, variant: variant.label, price: variant.price, qty });
+      }
+      cardQty[id] = 1;
+      const qtyEl = document.getElementById('qty-' + id);
+      if (qtyEl) qtyEl.innerText = 1;
+
+      updateCartUI();
+      showToast(item.en + ' (' + variant.label + ') added!');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 1800);
+    }
+
+    function calcDistanceKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const roadFactor = 1.25;
+      return Math.max(0.5, Number((R * c * roadFactor).toFixed(1)));
+    }
+
+    function detectGPSLocation() {
+      const statusEl = document.getElementById('gpsStatus');
+      statusEl.style.display = 'block';
+      statusEl.style.background = '#e0f2fe';
+      statusEl.style.color = '#0369a1';
+      statusEl.innerText = '⏳ Detecting your GPS location... Please allow location permission.';
+
+      if (!navigator.geolocation) {
+        statusEl.style.background = '#fef2f2';
+        statusEl.style.color = '#b91c1c';
+        statusEl.innerText = '❌ GPS is not supported on this browser.';
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          detectedKm = calcDistanceKm(SHOP_LAT, SHOP_LON, lat, lon);
+          customerMapUrl = `https://maps.google.com/?q=${lat},${lon}`;
+          statusEl.style.background = '#ecfdf5';
+          statusEl.style.color = '#047857';
+          statusEl.innerText = `✅ Location Detected! One-Way Distance from Shop: ${detectedKm} km`;
+          updateCartUI();
+        },
+        () => {
+          statusEl.style.background = '#fef2f2';
+          statusEl.style.color = '#b91c1c';
+          statusEl.innerText = '❌ Location permission denied. Please turn ON GPS/Location in phone settings and try again.';
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+
+    function getBillDetails() {
+      const itemsTotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+      let deliveryFee = 0;
+      let isFreeDelivery = false;
+
+      if (detectedKm !== null) {
+        if (itemsTotal >= FREE_DELIVERY_MIN && detectedKm <= FREE_DELIVERY_MAX_KM) {
+          deliveryFee = 0;
+          isFreeDelivery = true;
+        } else {
+          deliveryFee = Math.round(detectedKm * RATE_PER_KM);
+        }
+      }
+      return {
+        itemsTotal,
+        deliveryFee,
+        isFreeDelivery,
+        grandTotal: itemsTotal + deliveryFee
+      };
+    }
+
+    function updateCartUI() {
+      const totalItems = cart.reduce((s, c) => s + c.qty, 0);
+      const { itemsTotal } = getBillDetails();
+
+      document.getElementById('cartCount').innerText = totalItems;
+      const bar = document.getElementById('bottomBar');
+      if (totalItems > 0) {
+        bar.style.display = 'flex';
+        document.getElementById('barItems').innerText = totalItems + (totalItems > 1 ? ' Items' : ' Item');
+        document.getElementById('barTotal').innerText = '₹' + itemsTotal;
+      } else {
+        bar.style.display = 'none';
+      }
+      renderCartModal();
+    }
+
+    function updateCartItemQty(key, delta) {
+      const idx = cart.findIndex(c => c.key === key);
+      if (idx === -1) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      updateCartUI();
+    }
+
+    function renderCartModal() {
+      const list = document.getElementById('cartItemsList');
+      const billBox = document.getElementById('billSummaryBox');
+      const statusBox = document.getElementById('deliveryStatus');
+      const orderBtn = document.getElementById('waOrderBtn');
+      const upiRef = (document.getElementById('upiRef').value || '').trim();
+
+      if (cart.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:#64748b;padding:14px;">Your cart is empty.</p>';
+        billBox.innerHTML = '';
+        statusBox.className = 'delivery-alert alert-warn';
+        statusBox.innerText = 'Minimum order value is ₹' + MIN_ORDER;
+        orderBtn.disabled = true;
+        return;
+      }
+
+      const { itemsTotal, deliveryFee, isFreeDelivery, grandTotal } = getBillDetails();
+
+      list.innerHTML = cart.map(c => `
+        <div class="cart-item">
+          <div>
+            <div class="cart-item-name">${c.en} (${c.te})</div>
+            <div class="cart-item-meta">${c.variant} • ₹${c.price} × ${c.qty} = <strong>₹${c.price * c.qty}</strong></div>
+          </div>
+          <div class="cart-controls">
+            <button type="button" onclick="updateCartItemQty('${c.key}', -1)">−</button>
+            <span>${c.qty}</span>
+            <button type="button" onclick="updateCartItemQty('${c.key}', 1)">+</button>
+          </div>
+        </div>
+      `).join('');
+
+      let deliveryText = 'Detect GPS above';
+      if (detectedKm !== null) {
+        deliveryText = isFreeDelivery
+          ? `FREE (0 ₹ • ${detectedKm} km)`
+          : `₹${deliveryFee} (${detectedKm} km × ₹15/km)`;
+      }
+
+      billBox.innerHTML = `
+        <div class="bill-row"><span>Items Subtotal:</span><strong>₹${itemsTotal}</strong></div>
+        <div class="bill-row"><span>One-Way Delivery:</span><strong>${deliveryText}</strong></div>
+        <div class="bill-total"><span>Total Payable Online:</span><span>₹${grandTotal}</span></div>
+      `;
+
+      if (itemsTotal < MIN_ORDER) {
+        statusBox.className = 'delivery-alert alert-warn';
+        statusBox.innerText = `⚠️ Minimum order is ₹${MIN_ORDER}. Add ₹${MIN_ORDER - itemsTotal} more to proceed.`;
+        orderBtn.disabled = true;
+      } else if (detectedKm === null) {
+        statusBox.className = 'delivery-alert alert-warn';
+        statusBox.innerText = '📍 Tap "Detect My Exact GPS Location" above to calculate delivery fee.';
+        orderBtn.disabled = true;
+      } else if (upiRef.length < 6) {
+        statusBox.className = 'delivery-alert alert-warn';
+        statusBox.innerText = `💳 Pay ₹${grandTotal} to 9393446363 and enter your UPI Transaction / UTR ID below.`;
+        orderBtn.disabled = true;
+      } else {
+        statusBox.className = 'delivery-alert alert-ok';
+        statusBox.innerText = `✅ Ready! Click below to send your ₹${grandTotal} paid order on WhatsApp.`;
+        orderBtn.disabled = false;
+      }
+    }
+
+    function copyPhoneNumber() {
+      navigator.clipboard.writeText('9393446363');
+      showToast('Copied 9393446363! Pay via PhonePe / GPay');
+    }
+
+    function openCart() {
+      renderCartModal();
+      document.getElementById('cartModal').classList.add('open');
+    }
+
+    function closeCart() {
+      document.getElementById('cartModal').classList.remove('open');
+    }
+
+    function placeWhatsAppOrder() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const upiRef = document.getElementById('upiRef').value.trim();
+
+      if (!name || !phone || !address || !upiRef || detectedKm === null) {
+        alert("Please detect GPS location, complete online payment, and fill all details.");
+        return;
+      }
+
+      const { itemsTotal, deliveryFee, isFreeDelivery, grandTotal } = getBillDetails();
+      const deliverySummary = isFreeDelivery
+        ? `FREE Delivery (${detectedKm} km - Above ₹300 within 3 km)`
+        : `₹${deliveryFee} (${detectedKm} km one-way @ ₹15/km)`;
+
+      const itemsText = cart.map((c, i) =>
+        `${i + 1}. ${c.en} (${c.variant}) x ${c.qty} = ₹${c.price * c.qty}`
+      ).join('\n');
+
+      const message =
+`*SRI ANAND MIXTURE POINT - NEW PAID ORDER* 🌶️🥣
+
+*Customer:* ${name}
+*Phone:* ${phone}
+*Address:* ${address}
+*GPS Location:* ${customerMapUrl}
+
+*Order Items:*
+${itemsText}
+
+*Items Total:* ₹${itemsTotal}
+*One-Way Delivery:* ${deliverySummary}
+*Grand Total Paid:* ₹${grandTotal}
+*Payment Mode:* Online Paid to 9393446363
+*UPI Ref / UTR ID:* ${upiRef}`;
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
