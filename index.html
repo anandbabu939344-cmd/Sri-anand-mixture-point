@@ -167,11 +167,8 @@ render();setInterval(render,60000);
 <script>
   <div id="bandiBar" style="background:#fff;border-bottom:1.5px solid #cbd5e1;padding:12px;text-align:center;font-size:13px">
   <div style="font-weight:800;color:#0f172a;font-size:14px">📍 Shop Location: Opp. Phanindra Scan, Danavaipeta, Rajamahendravaram</div>
-  <div style="margin:8px auto;max-width:480px;border-radius:10px;overflow:hidden;border:1.5px solid #cbd5e1">
-    <iframe src="https://google.com" width="100%" height="140" style="border:0;display:block" loading="lazy"></iframe>
-  </div>
-  <div style="margin-top:6px">
-    <a href="https://google.com" target="_blank" style="display:inline-block;background:#0f6b38;color:#fff;text-decoration:none;padding:8px 16px;border-radius:8px;font-weight:800;font-size:13px">🗺️ Open Shop Location in Google Maps</a>
+  <div style="margin-top:8px">
+    <button type="button" onclick="openShopMap()" style="background:#0f6b38;color:#fff;border:0;padding:9px 16px;border-radius:8px;font-weight:800;font-size:13px;cursor:pointer">🗺️ Open Shop Location in Google Maps</button>
   </div>
   <div id="ownerBar" style="display:none;margin-top:10px;padding:8px;background:#f8fafc;border:1.5px solid #0f6b38;border-radius:10px">
     <span style="font-weight:800;font-size:12px;color:#0f172a">Shop Control: </span>
@@ -181,23 +178,25 @@ render();setInterval(render,60000);
 </div>
 <script>
 (function(){
-  const DB="https://firebaseio.com";
+  const DB="https://smpsnacks-d9944-default-rtdb."+"://firebaseio.com";
   const PIN="9393";
   const hd=document.querySelector('header'),bb=document.getElementById('bandiBar');
   if(hd&&bb) hd.insertAdjacentElement('afterend',bb);
 
+  window.openShopMap=function(){
+    window.open("https://www."+"://google.com","_blank");
+  };
+
   let shopOnline=true,offItems=new Array(),isOwner=false;
   const params=new URLSearchParams(window.location.search);
-  if(params.get('owner')===PIN){
+  if(params.get('owner')===PIN || localStorage.getItem('smp_own_v4')===PIN){
     isOwner=true;
-    localStorage.setItem('smp_own_v2',PIN);
-  }else if(localStorage.getItem('smp_own_v2')===PIN){
-    isOwner=true;
+    localStorage.setItem('smp_own_v4',PIN);
   }
 
   window.ownerLogout=function(){
     isOwner=false;
-    localStorage.removeItem('smp_own_v2');
+    localStorage.removeItem('smp_own_v4');
     document.getElementById('ownerBar').style.display='none';
     if(typeof window.render==='function') window.render();
   };
