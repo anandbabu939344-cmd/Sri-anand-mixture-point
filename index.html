@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sri Anand Mixture Point</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
 body{background:#f4f6f8;color:#1e293b;padding-bottom:80px}
 .bar{background:#028090;color:#fff;font-size:12px;font-weight:700;padding:8px;text-align:center}
 .tbar{background:#dc2626;color:#fff;font-size:12px;font-weight:800;padding:8px;text-align:center;display:none}
@@ -14,6 +14,8 @@ header{background:#0f6b38;color:#fff;padding:12px 14px;position:sticky;top:0;z-i
 .brand h1{font-size:16px}.brand p{font-size:11px;color:#fde68a}
 .cbtn{background:#17a2b8;color:#fff;border:0;width:40px;height:40px;border-radius:50%;font-size:18px;position:relative;cursor:pointer}
 .cnt{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+.locbar{background:#fff;border-bottom:2px solid #cbd5e1;padding:10px 12px;text-align:center;font-size:13px}
+.ownbar{display:none;margin-top:8px;padding:8px;background:#f8fafc;border:1.5px solid #0f6b38;border-radius:10px}
 .srch{padding:10px 12px 4px;max-width:900px;margin:auto}
 .srch input{width:100%;padding:10px;border-radius:10px;border:1.5px solid #cbd5e1;font-size:14px}
 .cats{display:flex;gap:8px;overflow-x:auto;padding:8px 12px;max-width:900px;margin:auto}
@@ -34,7 +36,8 @@ header{background:#0f6b38;color:#fff;padding:12px 14px;position:sticky;top:0;z-i
 .qbox{display:flex;align-items:center;border:1.5px solid #0f6b38;border-radius:8px;overflow:hidden;height:32px;margin-top:auto}
 .qbox button{background:#ecfdf5;border:0;width:34px;height:100%;font-size:18px;font-weight:800;color:#0f6b38;cursor:pointer}
 .qbox span{flex:1;font-size:14px;font-weight:800}
-.closedTag{background:#f1f5f9;color:#64748b;font-size:11px;font-weight:800;padding:7px;border-radius:8px;margin-top:auto}
+.offtag{background:#fee2e2;color:#b91c1c;font-size:11px;font-weight:800;padding:7px;border-radius:8px;margin-top:auto}
+.itbtn{width:100%;border:0;padding:6px;border-radius:6px;font-size:11px;font-weight:800;color:#fff;margin-top:5px;cursor:pointer}
 .bbar{position:fixed;bottom:0;left:0;right:0;background:#094925;color:#fff;padding:12px 14px;display:none;justify-content:space-between;align-items:center;z-index:40}
 .bbar strong{color:#fde047;font-size:16px}
 .vbtn{background:#f59e0b;color:#000;border:0;padding:8px 14px;border-radius:8px;font-weight:800;font-size:13px;cursor:pointer}
@@ -54,12 +57,23 @@ header{background:#0f6b38;color:#fff;padding:12px 14px;position:sticky;top:0;z-i
 </style>
 </head>
 <body>
-<div class="bar">Order Timings: 4:00 PM - 10:00 PM | Min Order Rs.100 | Above Rs.300 FREE Delivery (3 km) | Rs.15/km (One-Way)</div>
-<div class="tbar" id="tbar">Orders Closed Now - Online Orders Open Daily: 4:00 PM to 10:00 PM (Menu View Only)</div>
+<div class="bar">Min Order Rs.100 | Above Rs.300 FREE Delivery (3 km) | Delivery: Rs.15/km (One-Way Only)</div>
+<div class="tbar" id="tbar">🔴 Shop Temporarily Offline • Direct Visit: Opp. Phanindra Scan, Danavaipeta</div>
 <header>
   <div class="brand"><div class="logo">SMP</div><div><h1>Sri Anand Mixture Point</h1><p>Opp. Phanindra Scan, Danavaipeta</p></div></div>
-  <button class="cbtn" onclick="openC()">Cart <span class="cnt" id="cnt">0</span></button>
+  <button class="cbtn" onclick="openC()">🛒<span class="cnt" id="cnt">0</span></button>
 </header>
+<div class="locbar">
+  <div style="font-weight:800;color:#0f172a;font-size:14px">📍 Shop Location: Opp. Phanindra Scan, Danavaipeta, Rajamahendravaram</div>
+  <div style="margin-top:7px">
+    <a href="geo:17.0044,81.7875?q=17.0044,81.7875(Sri+Anand+Mixture+Point)" style="display:inline-block;background:#0f6b38;color:#fff;text-decoration:none;padding:8px 15px;border-radius:8px;font-weight:800;font-size:13px">🗺️ Open Shop Location in Google Maps</a>
+  </div>
+  <div class="ownbar" id="ownerBar">
+    <span style="font-weight:800;font-size:12px;color:#0f172a">Shop Control: </span>
+    <button type="button" id="shopToggleBtn" onclick="toggleShop()" style="border:0;padding:7px 14px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;color:#fff;background:#16a34a">🟢 SHOP ONLINE</button>
+    <button type="button" onclick="ownerLogout()" style="border:0;padding:7px 10px;border-radius:8px;font-weight:700;font-size:11px;cursor:pointer;background:#e2e8f0;color:#0f172a;margin-left:4px">Hide</button>
+  </div>
+</div>
 <div class="srch"><input id="q" placeholder="Search items (Mirchi Bajji, Mixture, Batani, Slice)..." oninput="render()"></div>
 <div class="cats">
   <button class="cat on" onclick="setC('All',this)">All (45)</button>
@@ -69,75 +83,76 @@ header{background:#0f6b38;color:#fff;padding:12px 14px;position:sticky;top:0;z-i
   <button class="cat" onclick="setC('Slice',this)">Slice</button>
 </div>
 <main class="grid" id="grid"></main>
-<div class="bbar" id="bbar"><div><span id="bi">0 Items</span> - <strong id="bt">Rs.0</strong></div><button class="vbtn" onclick="openC()">Checkout</button></div>
+<div class="bbar" id="bbar"><div><span id="bi">0 Items</span> • <strong id="bt">Rs.0</strong></div><button class="vbtn" onclick="openC()">Checkout →</button></div>
 <div class="ov" id="ov" onclick="if(event.target===this)closeC()">
   <div class="sh">
-    <div class="mh"><h3>Your Cart &amp; Checkout</h3><button onclick="closeC()" style="border:0;background:#f1f5f9;width:28px;height:28px;border-radius:50%;font-weight:700">X</button></div>
+    <div class="mh"><h3>Your Cart &amp; Checkout</h3><button onclick="closeC()" style="border:0;background:#f1f5f9;width:28px;height:28px;border-radius:50%;font-weight:700">✕</button></div>
     <div id="clist"></div>
     <div id="dstat" class="al w"></div>
-    <button class="gbtn" onclick="getGPS()">Detect My Exact GPS Location (Required)</button>
+    <button class="gbtn" onclick="getGPS()">📡 Detect My Exact GPS Location (Required)</button>
     <div id="gpsInfo" style="font-size:13px;font-weight:800;color:#0f6b38;margin:6px 0;text-align:center"></div>
     <div class="fg"><label>Customer Name *</label><input id="cn" placeholder="Enter your name"></div>
     <div class="fg"><label>Mobile Number *</label><input id="cp" type="tel" placeholder="10-digit mobile number"></div>
     <div class="fg"><label>Full Delivery Address *</label><textarea id="ca" rows="2" placeholder="House no, Street, Landmark"></textarea></div>
-    <div class="pnote"><b>Payment Instruction:</b><br>Order confirm nokkagane payment <b>9393446363</b> (PhonePe / GPay / Paytm) ki chesi, <b>WhatsApp lo screenshot pampinchaake</b> mee order confirm avtundi.<button type="button" class="cnum" onclick="copyNum()">Copy Payment Number: 9393446363</button></div>
-    <button class="wabtn" id="wabtn" onclick="sendWA()" disabled>Confirm Order on WhatsApp</button>
+    <div class="pnote"><b>⚠️ Payment Instruction:</b><br>Order confirm nokkagane payment <b>9393446363</b> (PhonePe / GPay / Paytm) ki chesi, <b>WhatsApp lo screenshot pampinchaake</b> mee order confirm avtundi.<button type="button" class="cnum" onclick="copyNum()">📋 Copy Payment Number: 9393446363</button></div>
+    <button class="wabtn" id="wabtn" onclick="sendWA()" disabled>📲 Confirm Order on WhatsApp</button>
   </div>
 </div>
 <script>
-const SHOP_LAT=17.0044,SHOP_LON=81.7875,WA="919393446363",M=[];
-function add(id,en,te,cat,em,hot,vars){M.push({id:id,en:en,te:te,cat:cat,em:em,hot:hot,vars:vars})}
-add(1,"Mirchi Bajji","మిర్చి బజ్జీ","Bajji","🌶️",1,[{l:"1 Plate (3 pcs)",p:30}]);
-add(2,"Aloo Bajji","ఆలూ బజ్జీ","Bajji","🥔",0,[{l:"1 Plate (3 pcs)",p:30}]);
-add(3,"Samosa","సమోసా","Bajji","🥟",1,[{l:"1 Plate (3 pcs)",p:30}]);
-add(4,"Nethi Vankaya Bajji","నేతి వంకాయ బజ్జీ","Bajji","🍆",0,[{l:"1 Plate (3 pcs)",p:40}]);
-add(5,"Perugu Vankaya Bajji","పెరుగు వంకాయ బజ్జీ","Bajji","🍆",0,[{l:"1 Plate (3 pcs)",p:40}]);
-add(6,"Nethi Mirchi Bajji","నేతి మిర్చి బజ్జీ","Bajji","🌶️",0,[{l:"1 Plate (3 pcs)",p:40}]);
-add(7,"Nethi Aloo Bajji","నేతి ఆలూ బజ్జీ","Bajji","🥔",0,[{l:"1 Plate (3 pcs)",p:40}]);
-add(8,"Nethi Samosa","నేతి సమోసా","Bajji","🥟",0,[{l:"1 Plate (2 pcs)",p:30}]);
-add(9,"Atukula Mixture","అటుకుల మిక్చర్","Mixture","🥣",1,[{l:"1 Plate",p:40}]);
-add(10,"Nethi Atukula Mixture","నేతి అటుకుల మిక్చర్","Mixture","🥣",0,[{l:"1 Plate",p:40}]);
-add(11,"Mirchi Bajji Mixture","మిర్చి బజ్జీ మిక్చర్","Mixture","🌶️",1,[{l:"1 Plate",p:40}]);
-add(12,"Aloo Bajji Mixture","ఆలూ బజ్జీ మిక్చర్","Mixture","🥣",0,[{l:"1 Plate",p:40}]);
-add(13,"Cut Bajji Mixture","కట్ బజ్జీ మిక్చర్","Mixture","🥣",0,[{l:"1 Plate",p:40}]);
-add(14,"Tomato Bajji Mixture","టమోటా బజ్జీ మిక్చర్","Mixture","🍅",0,[{l:"1 Plate",p:40}]);
-add(15,"Samosa Mixture","సమోసా మిక్చర్","Mixture","🥟",0,[{l:"1 Plate",p:40}]);
-add(16,"Nethi Vankaya Bajji Mixture","నేతి వంకాయ బజ్జీ మిక్చర్","Mixture","🍆",0,[{l:"1 Plate",p:40}]);
-add(17,"Perugu Bajji Mixture","పెరుగు బజ్జీ మిక్చర్","Mixture","🥣",0,[{l:"1 Plate",p:40}]);
-add(18,"Aloo Mixture","ఆలూ మిక్చర్","Mixture","🥔",0,[{l:"1 Plate",p:40}]);
-add(19,"Egg Mixture","ఎగ్ మిక్చర్","Mixture","🥚",0,[{l:"1 Plate",p:40}]);
-add(20,"Meal Maker Mixture","మిల్మేకర్ మిక్చర్","Mixture","🥣",0,[{l:"1 Plate",p:40}]);
-add(21,"Palli Peanut Mixture","పల్లీ మిక్చర్","Mixture","🥜",0,[{l:"1 Plate",p:40}]);
-add(22,"Pachi Tomato Mixture","పచ్చి టమాట మిక్చర్","Mixture","🍅",0,[{l:"1 Plate",p:40}]);
-add(23,"Kaju Cashew Mixture","జీడిపప్పు మిక్చర్","Mixture","🌰",1,[{l:"1 Plate",p:70}]);
-add(24,"Masala Batani","మసాలా బటానీ","Batani","🍲",1,[{l:"Half",p:30},{l:"Full",p:40}]);
-add(25,"Samosa Batani","సమోసా బటానీ","Batani","🍲",0,[{l:"1 Plate",p:50}]);
-add(26,"Mirchi Bajji Batani","మిర్చి బజ్జీ బటానీ","Batani","🌶️",0,[{l:"1 Plate",p:50}]);
-add(27,"Aloo Bajji Batani","ఆలూ బజ్జీ బటానీ","Batani","🍲",0,[{l:"1 Plate",p:50}]);
-add(28,"Tomato Bajji Batani","టమోటా బజ్జీ బటానీ","Batani","🍅",0,[{l:"1 Plate",p:50}]);
-add(29,"Cut Bajji Batani","కట్ బజ్జీ బటానీ","Batani","🍲",0,[{l:"1 Plate",p:50}]);
-add(30,"Vankaya Bajji Batani","వంకాయ బజ్జీ బటానీ","Batani","🍆",0,[{l:"1 Plate",p:50}]);
-add(31,"Perugu Bajji Batani","పెరుగు బజ్జీ బటానీ","Batani","🍲",0,[{l:"1 Plate",p:50}]);
-add(32,"Aloo Batani","ఆలూ బటానీ","Batani","🥔",0,[{l:"1 Plate",p:50}]);
-add(33,"Egg Batani","ఎగ్ బటానీ","Batani","🥚",0,[{l:"1 Plate",p:50}]);
-add(34,"Meal Maker Batani","మిల్మేకర్ బటానీ","Batani","🍲",0,[{l:"1 Plate",p:50}]);
-add(35,"Palli Batani","పల్లీ బటానీ","Batani","🥜",0,[{l:"1 Plate",p:50}]);
-add(36,"Kaju Cashew Batani","జీడిపప్పు బటానీ","Batani","🌰",1,[{l:"1 Plate",p:80}]);
-add(37,"Tomato Slice","టమోటా స్లైస్","Slice","🍅",0,[{l:"1 Plate",p:45}]);
-add(38,"Aloo Slice","ఆలూ స్లైస్","Slice","🥔",0,[{l:"1 Plate",p:45}]);
-add(39,"Egg Slice","ఎగ్ స్లైస్","Slice","🥚",0,[{l:"1 Plate",p:45}]);
-add(40,"Onion Slice","ఆనియన్ స్లైస్","Slice","🧅",0,[{l:"1 Plate",p:45}]);
-add(41,"Cut Bajji Slice","కట్ బజ్జీ స్లైస్","Slice","🥪",0,[{l:"1 Plate",p:45}]);
-add(42,"Onion Tomato Slice","ఆనియన్ టమాటా స్లైస్","Slice","🥪",0,[{l:"1 Plate",p:60}]);
-add(43,"Tomato Egg Slice","టమోటా ఎగ్ స్లైస్","Slice","🍳",1,[{l:"1 Plate",p:60}]);
-add(44,"Tomato Aloo Slice","టమోటా ఆలూ స్లైస్","Slice","🥪",0,[{l:"1 Plate",p:60}]);
-add(45,"Onion Egg Slice","ఆనియన్ ఎగ్ స్లైస్","Slice","🍳",0,[{l:"1 Plate",p:60}]);
+const SHOP_LAT=17.0044,SHOP_LON=81.7875,WA="919393446363",PIN="9393";
+const DB="https://"+"smpsnacks-d9944-default-rtdb"+"."+"firebaseio"+"."+"com/status.json";
+const M=new Array();
+function add(id,en,te,cat,em,hot,vars){M.push({id:id,en:en,te:te,cat:cat,em:em,hot:hot,vars:vars});}
+add(1,"Mirchi Bajji","మిర్చి బజ్జీ","Bajji","🌶️",1,new Array({l:"1 Plate (3 pcs)",p:30}));
+add(2,"Aloo Bajji","ఆలూ బజ్జీ","Bajji","🥔",0,new Array({l:"1 Plate (3 pcs)",p:30}));
+add(3,"Samosa","సమోసా","Bajji","🥟",1,new Array({l:"1 Plate (3 pcs)",p:30}));
+add(4,"Nethi Vankaya Bajji","నేతి వంకాయ బజ్జీ","Bajji","🍆",0,new Array({l:"1 Plate (3 pcs)",p:40}));
+add(5,"Perugu Vankaya Bajji","పెరుగు వంకాయ బజ్జీ","Bajji","🍆",0,new Array({l:"1 Plate (3 pcs)",p:40}));
+add(6,"Nethi Mirchi Bajji","నేతి మిర్చి బజ్జీ","Bajji","🌶️",0,new Array({l:"1 Plate (3 pcs)",p:40}));
+add(7,"Nethi Aloo Bajji","నేతి ఆలూ బజ్జీ","Bajji","🥔",0,new Array({l:"1 Plate (3 pcs)",p:40}));
+add(8,"Nethi Samosa","నేతి సమోసా","Bajji","🥟",0,new Array({l:"1 Plate (2 pcs)",p:30}));
+add(9,"Atukula Mixture","అటుకుల మిక్చర్","Mixture","🥣",1,new Array({l:"1 Plate",p:40}));
+add(10,"Nethi Atukula Mixture","నేతి అటుకుల మిక్చర్","Mixture","🥣",0,new Array({l:"1 Plate",p:40}));
+add(11,"Mirchi Bajji Mixture","మిర్చి బజ్జీ మిక్చర్","Mixture","🌶️",1,new Array({l:"1 Plate",p:40}));
+add(12,"Aloo Bajji Mixture","ఆలూ బజ్జీ మిక్చర్","Mixture","🥣",0,new Array({l:"1 Plate",p:40}));
+add(13,"Cut Bajji Mixture","కట్ బజ్జీ మిక్చర్","Mixture","🥣",0,new Array({l:"1 Plate",p:40}));
+add(14,"Tomato Bajji Mixture","టమోటా బజ్జీ మిక్చర్","Mixture","🍅",0,new Array({l:"1 Plate",p:40}));
+add(15,"Samosa Mixture","సమోసా మిక్చర్","Mixture","🥟",0,new Array({l:"1 Plate",p:40}));
+add(16,"Nethi Vankaya Bajji Mixture","నేతి వంకాయ బజ్జీ మిక్చర్","Mixture","🍆",0,new Array({l:"1 Plate",p:40}));
+add(17,"Perugu Bajji Mixture","పెరుగు బజ్జీ మిక్చర్","Mixture","🥣",0,new Array({l:"1 Plate",p:40}));
+add(18,"Aloo Mixture","ఆలూ మిక్చర్","Mixture","🥔",0,new Array({l:"1 Plate",p:40}));
+add(19,"Egg Mixture","ఎగ్ మిక్చర్","Mixture","🥚",0,new Array({l:"1 Plate",p:40}));
+add(20,"Meal Maker Mixture","మిల్మేకర్ మిక్చర్","Mixture","🥣",0,new Array({l:"1 Plate",p:40}));
+add(21,"Palli Peanut Mixture","పల్లీ మిక్చర్","Mixture","🥜",0,new Array({l:"1 Plate",p:40}));
+add(22,"Pachi Tomato Mixture","పచ్చి టమాట మిక్చర్","Mixture","🍅",0,new Array({l:"1 Plate",p:40}));
+add(23,"Kaju Cashew Mixture","జీడిపప్పు మిక్చర్","Mixture","🌰",1,new Array({l:"1 Plate",p:70}));
+add(24,"Masala Batani","మసాలా బటానీ","Batani","🍲",1,new Array({l:"Half",p:30},{l:"Full",p:40}));
+add(25,"Samosa Batani","సమోసా బటానీ","Batani","🍲",0,new Array({l:"1 Plate",p:50}));
+add(26,"Mirchi Bajji Batani","మిర్చి బజ్జీ బటానీ","Batani","🌶️",0,new Array({l:"1 Plate",p:50}));
+add(27,"Aloo Bajji Batani","ఆలూ బజ్జీ బటానీ","Batani","🍲",0,new Array({l:"1 Plate",p:50}));
+add(28,"Tomato Bajji Batani","టమోటా బజ్జీ బటానీ","Batani","🍅",0,new Array({l:"1 Plate",p:50}));
+add(29,"Cut Bajji Batani","కట్ బజ్జీ బటానీ","Batani","🍲",0,new Array({l:"1 Plate",p:50}));
+add(30,"Vankaya Bajji Batani","వంకాయ బజ్జీ బటానీ","Batani","🍆",0,new Array({l:"1 Plate",p:50}));
+add(31,"Perugu Bajji Batani","పెరుగు బజ్జీ బటానీ","Batani","🍲",0,new Array({l:"1 Plate",p:50}));
+add(32,"Aloo Batani","ఆలూ బటానీ","Batani","🥔",0,new Array({l:"1 Plate",p:50}));
+add(33,"Egg Batani","ఎగ్ బటానీ","Batani","🥚",0,new Array({l:"1 Plate",p:50}));
+add(34,"Meal Maker Batani","మిల్మేకర్ బటానీ","Batani","🍲",0,new Array({l:"1 Plate",p:50}));
+add(35,"Palli Batani","పల్లీ బటానీ","Batani","🥜",0,new Array({l:"1 Plate",p:50}));
+add(36,"Kaju Cashew Batani","జీడిపప్పు బటానీ","Batani","🌰",1,new Array({l:"1 Plate",p:80}));
+add(37,"Tomato Slice","టమోటా స్లైస్","Slice","🍅",0,new Array({l:"1 Plate",p:45}));
+add(38,"Aloo Slice","ఆలూ స్లైస్","Slice","🥔",0,new Array({l:"1 Plate",p:45}));
+add(39,"Egg Slice","ఎగ్ స్లైస్","Slice","🥚",0,new Array({l:"1 Plate",p:45}));
+add(40,"Onion Slice","ఆనియన్ స్లైస్","Slice","🧅",0,new Array({l:"1 Plate",p:45}));
+add(41,"Cut Bajji Slice","కట్ బజ్జీ స్లైస్","Slice","🥪",0,new Array({l:"1 Plate",p:45}));
+add(42,"Onion Tomato Slice","ఆనియన్ టమాటా స్లైస్","Slice","🥪",0,new Array({l:"1 Plate",p:60}));
+add(43,"Tomato Egg Slice","టమోటా ఎగ్ స్లైస్","Slice","🍳",1,new Array({l:"1 Plate",p:60}));
+add(44,"Tomato Aloo Slice","టమోటా ఆలూ స్లైస్","Slice","🥪",0,new Array({l:"1 Plate",p:60}));
+add(45,"Onion Egg Slice","ఆనియన్ ఎగ్ స్లైస్","Slice","🍳",0,new Array({l:"1 Plate",p:60}));
   let cat='All',sv={},cart={},distKm=null,uLat=null,uLon=null,shopOnline=true,offItems=new Array(),isOwner=false;
 const params=new URLSearchParams(window.location.search);
-if(params.get('owner')===PIN || localStorage.getItem('smp_own_v5')===PIN){isOwner=true;localStorage.setItem('smp_own_v5',PIN);}
+if(params.get('owner')===PIN || localStorage.getItem('smp_own_v6')===PIN){isOwner=true;localStorage.setItem('smp_own_v6',PIN);}
 
-function goMap(){window.location.href="geo:17.0044,81.7875?q=17.0044,81.7875(Sri+Anand+Mixture+Point)";}
-function ownerLogout(){isOwner=false;localStorage.removeItem('smp_own_v5');render();}
+function ownerLogout(){isOwner=false;localStorage.removeItem('smp_own_v6');render();}
 async function toggleShop(){
   shopOnline=!shopOnline;render();
   try{await fetch(DB,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({online:shopOnline,off:offItems})});}catch(e){}
@@ -241,4 +256,3 @@ setInterval(syncDB,4000);
 </script>
 </body>
 </html>
-a
