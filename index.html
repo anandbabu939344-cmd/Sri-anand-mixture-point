@@ -153,3 +153,110 @@ render();setInterval(render,60000);
 </script>
 </body>
 </html>
+<div id="bandiBar" style="background:#fff;border-bottom:1.5px solid #cbd5e1;padding:10px 12px;text-align:center;font-size:13px">
+  <div style="font-weight:800;color:#0f172a">📍 Bandi Address: Opp. Phanindra Scan, Danavaipeta, Rajamahendravaram</div>
+  <div style="display:flex;justify-content:center;gap:8px;margin-top:6px;flex-wrap:wrap">
+    <a href="https://google.com" target="_blank" style="background:#0f6b38;color:#fff;text-decoration:none;padding:7px 12px;border-radius:8px;font-weight:800;font-size:12px">🗺️ Direct Bandi Location (Google Maps)</a>
+    <button type="button" onclick="ownerLogin()" style="background:#1e293b;color:#fde047;border:0;padding:7px 12px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer">🔐 Owner ON/OFF</button>
+  </div>
+  <div id="ownerBar" style="display:none;margin-top:8px;padding:8px;background:#f8fafc;border:1.5px solid #0f6b38;border-radius:10px">
+    <span style="font-weight:800;font-size:12px;color:#0f172a">Shop Status: </span>
+    <button type="button" id="shopToggleBtn" onclick="toggleShop()" style="border:0;padding:6px 14px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;color:#fff;background:#16a34a">🟢 ONLINE (Tap to Turn OFF)</button>
+  </div>
+</div>
+<script>
+(function(){
+  const DB="https://firebaseio.com";
+  const PIN="9393";
+  const hd=document.querySelector('header'),bb=document.getElementById('bandiBar');
+  if(hd&&bb) hd.insertAdjacentElement('afterend',bb);
+  let shopOnline=true,offItems=[],isOwner=false;
+
+  window.ownerLogin=function(){
+    if(isOwner){isOwner=false;document.getElementById('ownerBar').style.display='none';applyControls();return;}
+    const p=prompt("Enter Owner PIN:");
+    if(p===PIN){isOwner=true;document.getElementById('ownerBar').style.display='block';applyControls();}
+    else if(p!==null){alert("Wrong PIN");}
+  };
+
+  window.toggleShop=async function(){
+    shopOnline=!shopOnline;
+    applyControls();
+    await fetch(DB,{method:'PUT',body:JSON.stringify({online:shopOnline,off:offItems})});
+  };
+
+  window.toggleItem=async function(id){
+    if(offItems.includes(id)) offItems=offItems.filter(x=>x!==id);
+    else offItems.push(id);
+    applyControls();
+    await fetch(DB,{method:'PUT',body:JSON.stringify({online:shopOnline,off:offItems})});
+  };
+
+  async function syncDB(){
+    try{
+      const r=await fetch(DB+'?t='+Date.now());
+      const d=await r.json();
+      if(d){
+        shopOnline=d.online!==false;
+        offItems=Array.isArray(d.off)?d.off:[];
+      }
+      applyControls();
+    }catch(e){}
+  }
+
+  function applyControls(){
+    const tb=document.getElementById('tbar'),sb=document.getElementById('shopToggleBtn');
+    if(sb){
+      sb.style.background=shopOnline?'#16a34a':'#dc2626';
+      sb.innerText=shopOnline?'🟢 SHOP ONLINE (Tap to Turn OFF)':'🔴 SHOP OFFLINE (Tap to Turn ON)';
+    }
+    if(!shopOnline&&tb){
+      tb.style.display='block';
+      tb.innerText='🔴 Shop Temporarily Offline • Direct Visit: Opp. Phanindra Scan, Danavaipeta';
+    }
+    document.querySelectorAll('.card').forEach(c=>{
+      const numEl=c.querySelector('.num');
+      if(!numEl)return;
+      const id=parseInt(numEl.innerText.replace('#',''));
+      const itemOff=offItems.includes(id);
+      const isOff=!shopOnline||itemOff;
+      const qbox=c.querySelector('.qbox'),cb=c.querySelector('.cb');
+      let tag=c.querySelector('.offTag'),obtn=c.querySelector('.ownItemBtn');
+      if(isOwner){
+        if(!obtn){
+          obtn=document.createElement('button');
+          obtn.type='button';
+          obtn.className='ownItemBtn';
+          obtn.style.cssText='width:100%;border:0;padding:5px;border-radius:6px;font-size:11px;font-weight:800;color:#fff;margin-top:4px;cursor:pointer';
+          obtn.onclick=function(){toggleItem(id);};
+          cb.appendChild(obtn);
+        }
+        obtn.style.background=itemOff?'#dc2626':'#16a34a';
+        obtn.innerText=itemOff?'OFF (Tap to Turn ON)':'ON (Tap to Turn OFF)';
+      }else if(obtn){obtn.remove();}
+
+      if(isOff){
+        if(qbox)qbox.style.display='none';
+        if(!tag){
+          tag=document.createElement('div');
+          tag.className='offTag';
+          tag.style.cssText='background:#fee2e2;color:#b91c1c;font-size:11px;font-weight:800;padding:7px;border-radius:8px;margin-top:auto';
+          cb.appendChild(tag);
+        }
+        tag.innerText=!shopOnline?'Shop Offline':'❌ Out of Stock';
+      }else{
+        if(qbox)qbox.style.display='flex';
+        if(tag)tag.remove();
+      }
+    });
+  }
+
+  const origRender=window.render;
+  if(typeof origRender==='function'){
+    window.render=function(){origRender();applyControls();};
+  }
+  syncDB();
+  setInterval(syncDB,10000);
+})();
+</script>
+
