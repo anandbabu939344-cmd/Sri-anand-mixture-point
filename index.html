@@ -165,8 +165,7 @@ render();setInterval(render,60000);
   </div>
 </div>
 <script>
-  </script>
-<div id="bandiBar" style="background:#fff;border-bottom:1.5px solid #cbd5e1;padding:12px;text-align:center;font-size:13px">
+  <div id="bandiBar" style="background:#fff;border-bottom:1.5px solid #cbd5e1;padding:12px;text-align:center;font-size:13px">
   <div style="font-weight:800;color:#0f172a;font-size:14px">📍 Shop Location: Opp. Phanindra Scan, Danavaipeta, Rajamahendravaram</div>
   <div style="margin:8px auto;max-width:480px;border-radius:10px;overflow:hidden;border:1.5px solid #cbd5e1">
     <iframe src="https://google.com" width="100%" height="140" style="border:0;display:block" loading="lazy"></iframe>
@@ -188,31 +187,17 @@ render();setInterval(render,60000);
   if(hd&&bb) hd.insertAdjacentElement('afterend',bb);
 
   let shopOnline=true,offItems=new Array(),isOwner=false;
-  if(location.search.indexOf('owner='+PIN)!==-1 || localStorage.getItem('smp_own')===PIN){
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('owner')===PIN){
     isOwner=true;
-    localStorage.setItem('smp_own',PIN);
-  }
-
-  function unlockOwner(){
-    const p=prompt("Enter Owner PIN:");
-    if(p===PIN){
-      isOwner=true;
-      localStorage.setItem('smp_own',PIN);
-      document.getElementById('ownerBar').style.display='block';
-      if(typeof window.render==='function') window.render();
-    }else if(p!==null){alert("Wrong PIN");}
-  }
-
-  if(hd){
-    hd.addEventListener('click',function(e){
-      if(e.target.closest('.cbtn')) return;
-      if(!isOwner) unlockOwner();
-    });
+    localStorage.setItem('smp_own_v2',PIN);
+  }else if(localStorage.getItem('smp_own_v2')===PIN){
+    isOwner=true;
   }
 
   window.ownerLogout=function(){
     isOwner=false;
-    localStorage.removeItem('smp_own');
+    localStorage.removeItem('smp_own_v2');
     document.getElementById('ownerBar').style.display='none';
     if(typeof window.render==='function') window.render();
   };
