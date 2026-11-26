@@ -165,39 +165,58 @@ render();setInterval(render,60000);
   </div>
 </div>
 <script>
-  <div id="bandiBar" style="background:#fff;border-bottom:1.5px solid #cbd5e1;padding:10px 12px;text-align:center;font-size:13px">
-  <div style="font-weight:800;color:#0f172a">📍 Bandi Address: Opp. Phanindra Scan, Danavaipeta, Rajamahendravaram</div>
-  <div style="margin-top:6px">
-    <a href="https://google.com" target="_blank" style="display:inline-block;background:#0f6b38;color:#fff;text-decoration:none;padding:7px 14px;border-radius:8px;font-weight:800;font-size:12px">🗺️ Direct Bandi Location (Google Maps)</a>
+  </script>
+<div id="bandiBar" style="background:#fff;border-bottom:1.5px solid #cbd5e1;padding:12px;text-align:center;font-size:13px">
+  <div style="font-weight:800;color:#0f172a;font-size:14px">📍 Shop Location: Opp. Phanindra Scan, Danavaipeta, Rajamahendravaram</div>
+  <div style="margin:8px auto;max-width:480px;border-radius:10px;overflow:hidden;border:1.5px solid #cbd5e1">
+    <iframe src="https://google.com" width="100%" height="140" style="border:0;display:block" loading="lazy"></iframe>
   </div>
-  <div id="ownerBar" style="display:none;margin-top:8px;padding:8px;background:#f8fafc;border:1.5px solid #0f6b38;border-radius:10px">
-    <span style="font-weight:800;font-size:12px;color:#0f172a">Shop Status: </span>
-    <button type="button" id="shopToggleBtn" onclick="toggleShop()" style="border:0;padding:6px 14px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;color:#fff;background:#16a34a">🟢 SHOP ONLINE</button>
-    <button type="button" onclick="ownerLogout()" style="border:0;padding:6px 10px;border-radius:8px;font-weight:700;font-size:11px;cursor:pointer;background:#e2e8f0;color:#0f172a;margin-left:4px">Exit</button>
+  <div style="margin-top:6px">
+    <a href="https://google.com" target="_blank" style="display:inline-block;background:#0f6b38;color:#fff;text-decoration:none;padding:8px 16px;border-radius:8px;font-weight:800;font-size:13px">🗺️ Open Shop Location in Google Maps</a>
+  </div>
+  <div id="ownerBar" style="display:none;margin-top:10px;padding:8px;background:#f8fafc;border:1.5px solid #0f6b38;border-radius:10px">
+    <span style="font-weight:800;font-size:12px;color:#0f172a">Shop Control: </span>
+    <button type="button" id="shopToggleBtn" onclick="toggleShop()" style="border:0;padding:7px 14px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;color:#fff;background:#16a34a">🟢 SHOP ONLINE</button>
+    <button type="button" onclick="ownerLogout()" style="border:0;padding:7px 10px;border-radius:8px;font-weight:700;font-size:11px;cursor:pointer;background:#e2e8f0;color:#0f172a;margin-left:4px">Hide</button>
   </div>
 </div>
 <script>
 (function(){
   const DB="https://firebaseio.com";
   const PIN="9393";
-  const hd=document.querySelector('header'),bb=document.getElementById('bandiBar'),logo=document.querySelector('.logo');
+  const hd=document.querySelector('header'),bb=document.getElementById('bandiBar');
   if(hd&&bb) hd.insertAdjacentElement('afterend',bb);
 
-  let shopOnline=true,offItems=[],isOwner=false,taps=0;
-  if(logo){
-    logo.style.cursor='pointer';
-    logo.onclick=function(){
-      taps++;
-      if(taps>=5){
-        taps=0;
-        const p=prompt("Enter Owner PIN:");
-        if(p===PIN){isOwner=true;document.getElementById('ownerBar').style.display='block';render();}
-        else if(p!==null){alert("Wrong PIN");}
-      }
-    };
+  let shopOnline=true,offItems=new Array(),isOwner=false;
+  if(location.search.indexOf('owner='+PIN)!==-1 || localStorage.getItem('smp_own')===PIN){
+    isOwner=true;
+    localStorage.setItem('smp_own',PIN);
   }
 
-  window.ownerLogout=function(){isOwner=false;document.getElementById('ownerBar').style.display='none';render();};
+  function unlockOwner(){
+    const p=prompt("Enter Owner PIN:");
+    if(p===PIN){
+      isOwner=true;
+      localStorage.setItem('smp_own',PIN);
+      document.getElementById('ownerBar').style.display='block';
+      if(typeof window.render==='function') window.render();
+    }else if(p!==null){alert("Wrong PIN");}
+  }
+
+  if(hd){
+    hd.addEventListener('click',function(e){
+      if(e.target.closest('.cbtn')) return;
+      if(!isOwner) unlockOwner();
+    });
+  }
+
+  window.ownerLogout=function(){
+    isOwner=false;
+    localStorage.removeItem('smp_own');
+    document.getElementById('ownerBar').style.display='none';
+    if(typeof window.render==='function') window.render();
+  };
+
   window.isOpen=function(){return shopOnline;};
   window.checkTime=function(){
     const tb=document.getElementById('tbar');
@@ -213,15 +232,15 @@ render();setInterval(render,60000);
 
   window.toggleShop=async function(){
     shopOnline=!shopOnline;
-    render();
-    await fetch(DB,{method:'PUT',body:JSON.stringify({online:shopOnline,off:offItems})});
+    if(typeof window.render==='function') window.render();
+    try{await fetch(DB,{method:'PUT',body:JSON.stringify({online:shopOnline,off:offItems})});}catch(e){}
   };
 
   window.toggleItem=async function(id){
     if(offItems.includes(id)) offItems=offItems.filter(x=>x!==id);
     else offItems.push(id);
-    render();
-    await fetch(DB,{method:'PUT',body:JSON.stringify({online:shopOnline,off:offItems})});
+    if(typeof window.render==='function') window.render();
+    try{await fetch(DB,{method:'PUT',body:JSON.stringify({online:shopOnline,off:offItems})});}catch(e){}
   };
 
   async function syncDB(){
@@ -230,14 +249,15 @@ render();setInterval(render,60000);
       const d=await r.json();
       if(d){
         shopOnline=d.online!==false;
-        offItems=Array.isArray(d.off)?d.off:[];
+        offItems=Array.isArray(d.off)?d.off:new Array();
       }
       if(typeof window.render==='function') window.render();
     }catch(e){}
   }
 
   function applyControls(){
-    const sb=document.getElementById('shopToggleBtn');
+    const ob=document.getElementById('ownerBar'),sb=document.getElementById('shopToggleBtn');
+    if(ob) ob.style.display=isOwner?'block':'none';
     if(sb){
       sb.style.background=shopOnline?'#16a34a':'#dc2626';
       sb.innerText=shopOnline?'🟢 SHOP ONLINE (Tap to Turn OFF)':'🔴 SHOP OFFLINE (Tap to Turn ON)';
@@ -256,7 +276,7 @@ render();setInterval(render,60000);
           obtn=document.createElement('button');
           obtn.type='button';
           obtn.className='ownItemBtn';
-          obtn.style.cssText='width:100%;border:0;padding:5px;border-radius:6px;font-size:11px;font-weight:800;color:#fff;margin-top:4px;cursor:pointer';
+          obtn.style.cssText='width:100%;border:0;padding:6px;border-radius:6px;font-size:11px;font-weight:800;color:#fff;margin-top:5px;cursor:pointer';
           obtn.onclick=function(){toggleItem(id);};
           cb.appendChild(obtn);
         }
