@@ -165,30 +165,62 @@ render();setInterval(render,60000);
   </div>
 </div>
 <script>
+  <div id="bandiBar" style="background:#fff;border-bottom:1.5px solid #cbd5e1;padding:10px 12px;text-align:center;font-size:13px">
+  <div style="font-weight:800;color:#0f172a">📍 Bandi Address: Opp. Phanindra Scan, Danavaipeta, Rajamahendravaram</div>
+  <div style="margin-top:6px">
+    <a href="https://google.com" target="_blank" style="display:inline-block;background:#0f6b38;color:#fff;text-decoration:none;padding:7px 14px;border-radius:8px;font-weight:800;font-size:12px">🗺️ Direct Bandi Location (Google Maps)</a>
+  </div>
+  <div id="ownerBar" style="display:none;margin-top:8px;padding:8px;background:#f8fafc;border:1.5px solid #0f6b38;border-radius:10px">
+    <span style="font-weight:800;font-size:12px;color:#0f172a">Shop Status: </span>
+    <button type="button" id="shopToggleBtn" onclick="toggleShop()" style="border:0;padding:6px 14px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;color:#fff;background:#16a34a">🟢 SHOP ONLINE</button>
+    <button type="button" onclick="ownerLogout()" style="border:0;padding:6px 10px;border-radius:8px;font-weight:700;font-size:11px;cursor:pointer;background:#e2e8f0;color:#0f172a;margin-left:4px">Exit</button>
+  </div>
+</div>
+<script>
 (function(){
   const DB="https://firebaseio.com";
   const PIN="9393";
-  const hd=document.querySelector('header'),bb=document.getElementById('bandiBar');
+  const hd=document.querySelector('header'),bb=document.getElementById('bandiBar'),logo=document.querySelector('.logo');
   if(hd&&bb) hd.insertAdjacentElement('afterend',bb);
-  let shopOnline=true,offItems=[],isOwner=false;
 
-  window.ownerLogin=function(){
-    if(isOwner){isOwner=false;document.getElementById('ownerBar').style.display='none';applyControls();return;}
-    const p=prompt("Enter Owner PIN:");
-    if(p===PIN){isOwner=true;document.getElementById('ownerBar').style.display='block';applyControls();}
-    else if(p!==null){alert("Wrong PIN");}
+  let shopOnline=true,offItems=[],isOwner=false,taps=0;
+  if(logo){
+    logo.style.cursor='pointer';
+    logo.onclick=function(){
+      taps++;
+      if(taps>=5){
+        taps=0;
+        const p=prompt("Enter Owner PIN:");
+        if(p===PIN){isOwner=true;document.getElementById('ownerBar').style.display='block';render();}
+        else if(p!==null){alert("Wrong PIN");}
+      }
+    };
+  }
+
+  window.ownerLogout=function(){isOwner=false;document.getElementById('ownerBar').style.display='none';render();};
+  window.isOpen=function(){return shopOnline;};
+  window.checkTime=function(){
+    const tb=document.getElementById('tbar');
+    if(!tb) return shopOnline;
+    if(!shopOnline){
+      tb.style.display='block';
+      tb.innerText='🔴 Shop Temporarily Offline • Direct Visit: Opp. Phanindra Scan, Danavaipeta';
+      return false;
+    }
+    tb.style.display='none';
+    return true;
   };
 
   window.toggleShop=async function(){
     shopOnline=!shopOnline;
-    applyControls();
+    render();
     await fetch(DB,{method:'PUT',body:JSON.stringify({online:shopOnline,off:offItems})});
   };
 
   window.toggleItem=async function(id){
     if(offItems.includes(id)) offItems=offItems.filter(x=>x!==id);
     else offItems.push(id);
-    applyControls();
+    render();
     await fetch(DB,{method:'PUT',body:JSON.stringify({online:shopOnline,off:offItems})});
   };
 
@@ -200,19 +232,15 @@ render();setInterval(render,60000);
         shopOnline=d.online!==false;
         offItems=Array.isArray(d.off)?d.off:[];
       }
-      applyControls();
+      if(typeof window.render==='function') window.render();
     }catch(e){}
   }
 
   function applyControls(){
-    const tb=document.getElementById('tbar'),sb=document.getElementById('shopToggleBtn');
+    const sb=document.getElementById('shopToggleBtn');
     if(sb){
       sb.style.background=shopOnline?'#16a34a':'#dc2626';
       sb.innerText=shopOnline?'🟢 SHOP ONLINE (Tap to Turn OFF)':'🔴 SHOP OFFLINE (Tap to Turn ON)';
-    }
-    if(!shopOnline&&tb){
-      tb.style.display='block';
-      tb.innerText='🔴 Shop Temporarily Offline • Direct Visit: Opp. Phanindra Scan, Danavaipeta';
     }
     document.querySelectorAll('.card').forEach(c=>{
       const numEl=c.querySelector('.num');
@@ -220,8 +248,9 @@ render();setInterval(render,60000);
       const id=parseInt(numEl.innerText.replace('#',''));
       const itemOff=offItems.includes(id);
       const isOff=!shopOnline||itemOff;
-      const qbox=c.querySelector('.qbox'),cb=c.querySelector('.cb');
+      const qbox=c.querySelector('.qbox'),cb=c.querySelector('.cb'),ctag=c.querySelector('.closedTag');
       let tag=c.querySelector('.offTag'),obtn=c.querySelector('.ownItemBtn');
+
       if(isOwner){
         if(!obtn){
           obtn=document.createElement('button');
@@ -237,6 +266,7 @@ render();setInterval(render,60000);
 
       if(isOff){
         if(qbox)qbox.style.display='none';
+        if(ctag)ctag.style.display='none';
         if(!tag){
           tag=document.createElement('div');
           tag.className='offTag';
@@ -254,9 +284,9 @@ render();setInterval(render,60000);
   const origRender=window.render;
   if(typeof origRender==='function'){
     window.render=function(){origRender();applyControls();};
+    window.render();
   }
   syncDB();
-  setInterval(syncDB,10000);
+  setInterval(syncDB,5000);
 })();
 </script>
-
